@@ -46,7 +46,7 @@ export function RotatingDiscountRing({ words, image, imageAlt, speedSeconds = 26
     </div></div>
   </div>;
 
-  return <div className="discount-visual" ref={visualRef} style={settings} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+  return <div className={`discount-visual${words.some((word) => word.length > 12) ? ' discount-visual--long' : ''}`} ref={visualRef} style={settings} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
     <div className="discount-visual-halo" aria-hidden="true" />
     {ring('back')}
     <img className="discount-model" src={image} alt={imageAlt} />
