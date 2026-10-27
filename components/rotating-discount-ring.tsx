@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 
 type Props = {
   words: string[];
@@ -9,16 +8,15 @@ type Props = {
   imageAlt: string;
   speedSeconds?: number;
   direction?: 'clockwise' | 'counterclockwise';
-  radius?: string;
   tiltX?: number;
-  tiltY?: number;
   tiltZ?: number;
 };
 
-const segmentCount = 16;
-
-export function RotatingDiscountRing({ words, image, imageAlt, speedSeconds = 26, direction = 'clockwise', radius = 'clamp(150px, 20vw, 270px)', tiltX = -15, tiltY = -7, tiltZ = -7 }: Props) {
+export function RotatingDiscountRing({ words, image, imageAlt, speedSeconds = 22, direction = 'clockwise', tiltX = 13, tiltZ = -31 }: Props) {
   const visualRef = useRef<HTMLDivElement>(null);
+  const backRef = useRef<HTMLCanvasElement>(null);
+  const frontRef = useRef<HTMLCanvasElement>(null);
+  const elapsedRef = useRef(0);
   const [visible, setVisible] = useState(true);
   const [paused, setPaused] = useState(false);
 
@@ -30,27 +28,131 @@ export function RotatingDiscountRing({ words, image, imageAlt, speedSeconds = 26
     return () => observer.disconnect();
   }, []);
 
-  const settings = {
-    '--ring-radius': radius,
-    '--ring-speed': `${speedSeconds}s`,
-    '--ring-direction': direction === 'clockwise' ? 'normal' : 'reverse',
-    '--ring-tilt-x': `${tiltX}deg`,
-    '--ring-tilt-y': `${tiltY}deg`,
-    '--ring-tilt-z': `${tiltZ}deg`,
-    '--ring-play-state': visible && !paused ? 'running' : 'paused',
-  } as CSSProperties;
+  useEffect(() => {
+    const element = visualRef.current;
+    const backCanvas = backRef.current;
+    const frontCanvas = frontRef.current;
+    if (!element || !backCanvas || !frontCanvas) return;
 
-  const ring = (layer: 'back' | 'front') => <div className={`discount-ring-layer discount-ring-layer--${layer}`} aria-hidden="true">
-    <div className="discount-ring-tilt"><div className="discount-ring-orbit">
-      {Array.from({ length: segmentCount }, (_, index) => <span className="discount-ring-word" style={{ '--angle': `${index * (360 / segmentCount)}deg` } as CSSProperties} key={index}>{words[index % words.length]}</span>)}
-    </div></div>
-  </div>;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const letters = [...`${words.join(' ')} `.repeat(2)];
+    const rotation = tiltZ * Math.PI / 180;
+    const flatten = Math.sin(tiltX * Math.PI / 180);
+    const ux = Math.cos(rotation);
+    const uy = Math.sin(rotation);
+    const vx = -uy;
+    const vy = ux;
+    let frameId = 0;
+    let lastPaint = 0;
+    let previousTime = 0;
 
-  return <div className={`discount-visual${words.some((word) => word.length > 12) ? ' discount-visual--long' : ''}`} ref={visualRef} style={settings} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-    <div className="discount-visual-halo" aria-hidden="true" />
-    {ring('back')}
+    const draw = (time: number) => {
+      if (previousTime && !reducedMotion.matches) elapsedRef.current += Math.min(time - previousTime, 100);
+      previousTime = time;
+      frameId = requestAnimationFrame(draw);
+      if (time - lastPaint < 32) return;
+      lastPaint = time;
+
+      const { width, height } = element.getBoundingClientRect();
+      if (!width || !height) return;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      const layers = [backCanvas, frontCanvas];
+      for (const canvas of layers) {
+        const w = Math.round(width * pixelRatio);
+        const h = Math.round(height * pixelRatio);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+        }
+      }
+      const contexts = layers.map((canvas) => canvas.getContext('2d'));
+      contexts.forEach((ctx) => {
+        if (!ctx) return;
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+      });
+
+      const radius = Math.min(330, Math.max(145, width * 0.43));
+      const centerX = width * 0.5;
+      const centerY = height * 0.28;
+      const fontSize = Math.min(39, Math.max(22, width * 0.053));
+      const phase = (direction === 'clockwise' ? 1 : -1) * elapsedRef.current / (speedSeconds * 1000) * Math.PI * 2;
+      const angleStep = Math.PI * 2 / letters.length;
+
+      letters.forEach((letter, index) => {
+        if (letter === ' ') return;
+        const angle = phase - index * angleStep;
+        const ca = Math.cos(angle);
+        const sa = Math.sin(angle);
+        const depth = sa * Math.cos(tiltX * Math.PI / 180);
+        const front = depth >= 0;
+        const ctx = contexts[front ? 1 : 0];
+        if (!ctx) return;
+        const perspective = 650 / (650 - depth * radius * 0.64);
+        const horizontal = radius * ca;
+        const vertical = radius * sa * flatten;
+        const x = centerX + perspective * (horizontal * ux + vertical * vx);
+        const y = centerY + perspective * (horizontal * uy + vertical * vy);
+        const dx = radius * (sa * ux - ca * flatten * vx);
+        const dy = radius * (sa * uy - ca * flatten * vy);
+        let glyphAngle = Math.atan2(dy, dx);
+        if (dx < 0) glyphAngle += Math.PI;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(glyphAngle);
+        ctx.scale(perspective * Math.max(0.35, Math.abs(sa)), perspective);
+        ctx.globalAlpha = front ? 1 : 0.46;
+        ctx.fillStyle = '#741a1e';
+        ctx.font = `${front ? 700 : 600} ${fontSize}px Arial, sans-serif`;
+        const glyph = front ? letter : letters[(letters.length - index) % letters.length];
+        ctx.fillText(glyph, 0, 0);
+        ctx.restore();
+      });
+    };
+
+    const start = () => {
+      cancelAnimationFrame(frameId);
+      previousTime = 0;
+      frameId = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frameId);
+      previousTime = 0;
+    };
+    const onMotionChange = () => {
+      if (reducedMotion.matches) {
+        stop();
+        draw(0);
+        cancelAnimationFrame(frameId);
+      } else if (visible && !paused) start();
+    };
+    const resizeObserver = new ResizeObserver(() => {
+      if (reducedMotion.matches || !visible || paused) {
+        draw(0);
+        cancelAnimationFrame(frameId);
+      }
+    });
+    resizeObserver.observe(element);
+
+    if (reducedMotion.matches || !visible || paused) {
+      draw(0);
+      cancelAnimationFrame(frameId);
+    } else start();
+    reducedMotion.addEventListener('change', onMotionChange);
+    return () => {
+      stop();
+      resizeObserver.disconnect();
+      reducedMotion.removeEventListener('change', onMotionChange);
+    };
+  }, [words, visible, paused, speedSeconds, direction, tiltX, tiltZ]);
+
+  return <div className="discount-visual" ref={visualRef} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <canvas className="discount-ring-canvas discount-ring-canvas--back" ref={backRef} aria-hidden="true" />
     <img className="discount-model" src={image} alt={imageAlt} />
-    {ring('front')}
+    <canvas className="discount-ring-canvas discount-ring-canvas--front" ref={frontRef} aria-hidden="true" />
     <span className="discount-visual-caption" aria-hidden="true">VARKUZO / MEDELLÍN</span>
   </div>;
 }

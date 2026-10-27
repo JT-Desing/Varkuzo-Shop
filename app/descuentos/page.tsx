@@ -25,11 +25,10 @@ async function getHeroImage() {
 
 export default async function DiscountsPage() {
   const [products, image] = await Promise.all([getSaleProducts(), getHeroImage()]);
-  const percentages = [...new Set(products.map((product) => product.discountPercent))].sort((a, b) => b - a).slice(0, 3);
-  const words = percentages.length ? ['DESCUENTOS', ...percentages.map((percent) => `${percent}% DESCUENTO`), 'VARKUZO'] : ['DESCUENTOS', 'PRECIO REAL', 'VARKUZO'];
+  const words = ['VARKUZO •', 'DESCUENTOS •', 'SALE •'];
   return <main className="sale-page">
     <section className="sale-hero" aria-labelledby="sale-title">
-      <div className="sale-hero-copy"><p className="sale-kicker">VARKUZO / MEDELLÍN</p><h1 id="sale-title">DESCUEN<br /><em>TOS.</em></h1><p>BUENAS PIEZAS. PRECIOS QUE SE MUEVEN CONTIGO.</p><a className="sale-cta" href="#prendas-en-descuento">EXPLORAR DESCUENTOS <span aria-hidden="true">↘</span></a><span className="sale-hero-index">EDICIÓN / PRECIOS REALES</span></div>
+      <div className="sale-hero-copy"><p className="sale-kicker">VARKUZO / MEDELLÍN</p><h1 id="sale-title">DESCUEN<br /><em>TOS.</em></h1><p>Tus prendas favoritas, ahora a precios especiales.</p><a className="sale-cta" href="#prendas-en-descuento">EXPLORAR DESCUENTOS <span aria-hidden="true">↘</span></a><span className="sale-hero-index">EDICIÓN / PRECIOS REALES</span></div>
       <RotatingDiscountRing words={words} image={image} imageAlt="Modelo con ropa urbana Varkuzo" />
       <span className="sale-hero-side" aria-hidden="true">LA CALLE TAMBIÉN TIENE PORTE · VARKUZO</span>
     </section>
