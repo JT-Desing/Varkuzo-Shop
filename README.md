@@ -13,6 +13,8 @@ El frontend lee los productos publicados desde la WooCommerce Store API. Cuando 
 
 La ficha incluye guía para medir tallas, información de entregas locales, preguntas frecuentes y favoritos guardados en el navegador. La tabla de medidas queda identificada como pendiente hasta medir físicamente cada talla. Los favoritos son locales al dispositivo y no requieren cuenta.
 
+El sitio también incluye `/nosotros` (dirección de marca, misión y visión) y `/ayuda` (preguntas frecuentes, entregas, retracto, devoluciones, garantía y pagos). Los apartados legales enlazan normas y guías oficiales colombianas. Son información de orientación para la etapa de diseño; antes de vender habrá que publicar identidad del vendedor, canal de reclamaciones y condiciones operativas definitivas.
+
 ## Estructura
 
 - `app/`: portada, catálogo y ficha de producto.
@@ -33,5 +35,6 @@ La portada tiene dos banners que cambian cada seis segundos y permiten selecció
 - Validar identidad de marca y preparar imágenes y fichas definitivas de producto.
 - Desarrollar el plugin interno de WordPress para capturar fotos frontal, posterior y de detalle, medidas por talla, estado de revisión y archivo 3D por producto o variante. El archivo no se publicará automáticamente: requiere revisión de fidelidad frente a la prenda física. Después, conectar el visor de la ficha a un modelo aprobado; el control «Explorar 3D» permanece deshabilitado mientras no exista ese flujo.
 - Confirmar mediante muestras físicas las tablas de medidas, composición y cuidados de cada referencia, así como cobertura, plazos y tarifas de entrega antes de habilitar compras.
+- Completar y revisar los textos comerciales y legales con los datos reales del negocio: identidad del vendedor, dirección y canal de atención, política de cambios comerciales, medios de pago, tratamiento de datos y condiciones de compra. Conservar los derechos legales de retracto y garantía tal como corresponda.
 
 Las credenciales locales y los respaldos SQL se mantienen fuera de Git. El archivo `.env.example` solo contiene valores de ejemplo.
