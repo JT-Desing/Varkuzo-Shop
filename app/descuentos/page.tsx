@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getSaleProducts } from '@/lib/sale-products';
 import { RotatingDiscountRing } from '@/components/rotating-discount-ring';
 import { SaleCatalog } from '@/components/sale-catalog';
+import { ScrollBurn } from '@/components/scroll-burn';
+import '../scroll-burn.css';
 import './sale.css';
 
 export const metadata: Metadata = {
@@ -28,9 +30,10 @@ export default async function DiscountsPage() {
   const words = ['VARKUZO •', 'DESCUENTOS •', 'SALE •'];
   return <main className="sale-page">
     <section className="sale-hero" aria-labelledby="sale-title">
-      <div className="sale-hero-copy"><p className="sale-kicker">VARKUZO / MEDELLÍN</p><h1 id="sale-title">DESCUEN<br /><em>TOS.</em></h1><p>Tus prendas favoritas, ahora a precios especiales.</p><a className="sale-cta" href="#prendas-en-descuento">EXPLORAR DESCUENTOS <span aria-hidden="true">↘</span></a><span className="sale-hero-index">EDICIÓN / PRECIOS REALES</span></div>
+      <div className="sale-hero-copy"><p className="sale-kicker">VARKUZO / MEDELLÍN</p><h1 id="sale-title">DESCUENTOS<span>.</span></h1><p>Las piezas que querías. Un precio para llevarlas hoy.</p><a className="sale-cta" href="#prendas-en-descuento">EXPLORAR DESCUENTOS <span aria-hidden="true">↘</span></a><span className="sale-hero-index">PRECIOS REALES / PIEZAS CON CARÁCTER</span></div>
       <RotatingDiscountRing words={words} image={image} imageAlt="Modelo con ropa urbana Varkuzo" />
       <span className="sale-hero-side" aria-hidden="true">LA CALLE TAMBIÉN TIENE PORTE · VARKUZO</span>
+      <ScrollBurn color="#f3f0ea" start={0.12} end={0.82} blobSize={66} seed={31} />
     </section>
     <SaleCatalog products={products} />
   </main>;

@@ -161,10 +161,11 @@ export function RotatingDiscountRing({ words, image, imageAlt, speedSeconds = 22
     };
   }, [words, visible, paused, speedSeconds, direction, tiltX, tiltZ]);
 
-  return <div className="discount-visual" ref={visualRef} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+  return <div className="discount-visual" ref={visualRef}>
     <canvas className="discount-ring-canvas discount-ring-canvas--back" ref={backRef} aria-hidden="true" />
     <img className="discount-model" src={image} alt={imageAlt} />
     <canvas className="discount-ring-canvas discount-ring-canvas--front" ref={frontRef} aria-hidden="true" />
+    <span className="discount-pause-zone" aria-hidden="true" onPointerEnter={(event) => { if (event.pointerType === 'mouse') setPaused(true); }} onPointerLeave={() => setPaused(false)} />
     <span className="discount-visual-caption" aria-hidden="true">VARKUZO / MEDELLÍN</span>
   </div>;
 }
