@@ -23,12 +23,20 @@ const slides = [
 export function HeroCarousel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [scrollPaused, setScrollPaused] = useState(false);
 
   useEffect(() => {
-    if (paused) return;
+    const update = () => setScrollPaused(window.scrollY > 30);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+
+  useEffect(() => {
+    if (paused || scrollPaused) return;
     const timer = window.setInterval(() => setActive((current) => (current + 1) % slides.length), 6000);
     return () => window.clearInterval(timer);
-  }, [paused]);
+  }, [paused, scrollPaused]);
 
   return (
     <section className="hero hero-carousel" aria-roledescription="carrusel" aria-label="Campañas Varkuzo" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>
