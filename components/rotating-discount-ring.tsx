@@ -100,14 +100,26 @@ export function RotatingDiscountRing({ words, image, imageAlt, speedSeconds = 22
         let glyphAngle = Math.atan2(dy, dx);
         if (dx < 0) glyphAngle += Math.PI;
 
+        const nextAngle = angle - angleStep;
+        const nextDepth = Math.sin(nextAngle) * Math.cos(tiltX * Math.PI / 180);
+        const nextPerspective = 650 / (650 - nextDepth * radius * 0.64);
+        const nextHorizontal = radius * Math.cos(nextAngle);
+        const nextVertical = radius * Math.sin(nextAngle) * flatten;
+        const nextX = centerX + nextPerspective * (nextHorizontal * ux + nextVertical * vx);
+        const nextY = centerY + nextPerspective * (nextHorizontal * uy + nextVertical * vy);
+        const projectedStep = Math.hypot(nextX - x, nextY - y);
+        const glyph = front ? letter : letters[letters.length - 1 - index];
+        ctx.font = `${front ? 700 : 600} ${fontSize}px Arial, sans-serif`;
+        const fitScale = Math.min(1, projectedStep / (ctx.measureText(glyph).width * perspective * 1.06));
+        const fitFade = Math.max(0, Math.min(1, (fitScale - 0.16) / 0.36));
+        const sideFade = Math.max(0, Math.min(1, (Math.abs(sa) - 0.42) / 0.28));
+
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(glyphAngle);
-        ctx.scale(perspective * Math.max(0.35, Math.abs(sa)), perspective);
-        ctx.globalAlpha = front ? 1 : 0.46;
+        ctx.scale(perspective * fitScale, perspective);
+        ctx.globalAlpha = (front ? 1 : 0.36) * fitFade * sideFade;
         ctx.fillStyle = '#741a1e';
-        ctx.font = `${front ? 700 : 600} ${fontSize}px Arial, sans-serif`;
-        const glyph = front ? letter : letters[(letters.length - index) % letters.length];
         ctx.fillText(glyph, 0, 0);
         ctx.restore();
       });
