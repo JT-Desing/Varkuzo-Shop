@@ -3,9 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 type Line = { text: string; emphasis?: boolean };
-type Props = { lines: Line[]; as?: 'h2' | 'blockquote'; mode?: 'smooth' | 'human'; className?: string };
+type Props = { lines: Line[]; as?: 'h2' | 'blockquote'; className?: string };
 
-export default function TypeboardTitle({ lines, as = 'h2', mode = 'human', className = '' }: Props) {
+export default function TypeboardTitle({ lines, as = 'h2', className = '' }: Props) {
   const segments = useMemo(() => lines.map(({ text }, lineIndex) => {
     const withoutPeriod = lineIndex === lines.length - 1 ? text.replace(/\.$/, '') : text;
     return typeof Intl.Segmenter === 'function'
@@ -17,8 +17,7 @@ export default function TypeboardTitle({ lines, as = 'h2', mode = 'human', class
   const root = useRef<HTMLElement>(null);
   const glyphs = useRef<(HTMLSpanElement | null)[]>([]);
   const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-  const [finished, setFinished] = useState(false);
+  const [active, setActive] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0, height: 0 });
 
@@ -31,31 +30,29 @@ export default function TypeboardTitle({ lines, as = 'h2', mode = 'human', class
   }, []);
 
   useEffect(() => {
-    if (!root.current || started || reduced) return;
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0]?.isIntersecting) {
-        setStarted(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.28 });
-    observer.observe(root.current);
-    return () => observer.disconnect();
-  }, [started, reduced]);
-
-  useEffect(() => {
-    if (!started || reduced || count >= total) return;
-    const previous = glyphs.current[count - 1]?.textContent || '';
-    const rhythm = mode === 'smooth' ? 72 : 64 + ((count * 17) % 37) - 18;
-    const pause = /[,;:]/.test(previous) ? 170 : /[.!?]/.test(previous) ? 280 : 0;
-    const timer = window.setTimeout(() => setCount(value => value + 1), count === 0 ? 150 : rhythm + pause);
-    return () => window.clearTimeout(timer);
-  }, [count, mode, reduced, started, total]);
-
-  useEffect(() => {
-    if (reduced || !started || count < total) return;
-    const timer = window.setTimeout(() => setFinished(true), 270);
-    return () => window.clearTimeout(timer);
-  }, [count, reduced, started, total]);
+    const element = root.current;
+    if (!element || reduced) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = element.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      // Scrub the complete phrase while its heading travels through the viewport.
+      const progress = Math.max(0, Math.min(1, (viewport * .84 - rect.top) / (viewport * .64)));
+      setCount(Math.round(progress * total));
+      setActive(rect.top < viewport && rect.bottom > 0);
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    schedule();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    document.fonts.ready.then(schedule);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [reduced, total]);
 
   useEffect(() => {
     const element = root.current;
@@ -89,6 +86,6 @@ export default function TypeboardTitle({ lines, as = 'h2', mode = 'human', class
       const period = reduced && lineIndex === segments.length - 1 ? '.' : null;
       return <span key={lineIndex} className="typeboard-line" aria-hidden="true">{lines[lineIndex].emphasis ? <em>{content}{period}</em> : <>{content}{period}</>}</span>;
     })}
-    {!reduced && started && <span aria-hidden="true" className={`typeboard-cursor ${finished ? 'is-period' : ''}`} style={{ '--cursor-x': `${cursor.x}px`, '--cursor-y': `${cursor.y}px`, '--cursor-height': `${cursor.height}px` } as React.CSSProperties} />}
+    {!reduced && active && <span aria-hidden="true" className={`typeboard-cursor ${count >= total ? 'is-period' : ''}`} style={{ '--cursor-x': `${cursor.x}px`, '--cursor-y': `${cursor.y}px`, '--cursor-height': `${cursor.height}px` } as React.CSSProperties} />}
   </Tag>;
 }
