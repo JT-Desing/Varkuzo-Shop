@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Product } from '@/lib/products';
 import { ProductCard } from './product-card';
 
@@ -9,6 +9,15 @@ const categories = ['Todo', 'Buzos', 'Camisetas', 'Pantalones', 'Accesorios'];
 export function ShopClient({ products, initialCategory }: { products: Product[]; initialCategory: string }) {
   const [category, setCategory] = useState(categories.includes(initialCategory) ? initialCategory : 'Todo');
   const [query, setQuery] = useState('');
+  useEffect(() => {
+    const syncCategory = () => {
+      const fromUrl = new URLSearchParams(window.location.search).get('categoria') || 'Todo';
+      setCategory(categories.includes(fromUrl) ? fromUrl : 'Todo');
+    };
+    syncCategory();
+    window.addEventListener('popstate', syncCategory);
+    return () => window.removeEventListener('popstate', syncCategory);
+  }, [initialCategory]);
   const filtered = useMemo(() => products.filter((product) => (category === 'Todo' || product.category === category) && product.name.toLocaleLowerCase('es').includes(query.toLocaleLowerCase('es'))), [products, category, query]);
   const multiColor = filtered.filter((product) => (product.colorVariants?.length ?? 0) >= 2);
   const singleColor = filtered.filter((product) => (product.colorVariants?.length ?? 0) < 2);
