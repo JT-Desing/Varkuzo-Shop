@@ -19,7 +19,7 @@ export function SaleCatalog({ products }: { products: SaleProduct[] }) {
     .sort((a, b) => sort === 'precio-asc' ? a.currentAmount - b.currentAmount : sort === 'precio-desc' ? b.currentAmount - a.currentAmount : b.discountPercent - a.discountPercent), [products, category, size, minPrice, maxPrice, sort]);
 
   return <section className="sale-catalog" id="prendas-en-descuento">
-    <div className="sale-catalog-heading"><div><p className="sale-kicker">VARKUZO / PRECIOS ESPECIALES</p><h2>ENCUENTRA TU<br /><em>PRÓXIMA PRENDA.</em></h2></div><p>Prendas con rebajas activas. El precio que ves viene directamente del catálogo de la tienda.</p></div>
+    <div className="sale-catalog-heading"><div><p className="sale-kicker">VARKUZO / PRECIOS ESPECIALES</p><h2>ENCUENTRA TU<br /><em>PRÓXIMA PRENDA.</em></h2></div><p>Filtra por talla, categoría o precio. Solo aparecen prendas con descuento activo en el catálogo.</p></div>
     <div className="sale-toolbar">
       <div className="sale-category-tabs" role="group" aria-label="Filtrar descuentos por categoría">{categories.map((item) => <button type="button" key={item} className={category === item ? 'is-active' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div>
       <div className="sale-selects">

@@ -15,6 +15,6 @@ export function FavoritesList() {
     return () => { window.removeEventListener('storage', update); window.removeEventListener('varkuzo:favorites-changed', update); };
   }, []);
   if (items === null) return <p>Cargando favoritos…</p>;
-  if (!items.length) return <div className="favorites-empty"><p>Todavía no has guardado ninguna pieza.</p><Link className="button button-solid" href="/shop">EXPLORAR CATÁLOGO <span>↗</span></Link></div>;
+  if (!items.length) return <div className="favorites-empty"><p>Tu lista está vacía. Date una vuelta por el catálogo y guarda las piezas que te gusten.</p><Link className="button button-solid" href="/shop">EXPLORAR CATÁLOGO <span>↗</span></Link></div>;
   return <div className="favorites-grid">{items.map((item) => <article key={item.slug} className="favorites-item"><Link href={`/producto/${item.slug}`}><img src={item.image} alt={item.name} /><small>{item.category.toUpperCase()}</small><h2>{item.name}</h2></Link><button type="button" onClick={() => writeFavorites(readFavorites().filter((entry) => entry.slug !== item.slug))}>QUITAR DE FAVORITOS ×</button></article>)}</div>;
 }

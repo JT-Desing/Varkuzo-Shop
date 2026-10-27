@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProduct } from '@/lib/products';
@@ -6,6 +7,16 @@ import { ProductOptions } from '@/components/product-options';
 import { FavoriteButton } from '@/components/favorite-button';
 import { ProductBenefits, ProductInformation, ProductViewTabs } from '@/components/product-info';
 import './product-detail.css';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+  if (!product) return { title: 'Prenda no encontrada | Varkuzo' };
+  return {
+    title: `${product.name} | ${product.category} Varkuzo Medellín`,
+    description: `${product.description} Conoce fotos, colores y detalles de ${product.name} en Varkuzo, marca de ropa urbana de Medellín.`,
+  };
+}
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

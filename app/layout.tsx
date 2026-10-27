@@ -5,8 +5,8 @@ import { Footer } from '@/components/footer';
 import { MotionInit } from '@/components/motion-init';
 
 export const metadata: Metadata = {
-  title: 'Varkuzo — Ropa con carácter',
-  description: 'Moda urbana de Medellín. Explora Varkuzo.',
+  title: 'Varkuzo | Ropa urbana creada desde Medellín',
+  description: 'Conoce Varkuzo: buzos, camisetas y pantalones de estilo urbano inspirados en el barrio de Medellín. Explora las primeras piezas de la marca.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

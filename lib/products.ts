@@ -15,32 +15,32 @@ export type Product = {
 export const demoProducts: Product[] = [
   {
     id: 'demo-01', slug: 'buzo-trazo', name: 'Buzo Trazo', category: 'Buzos',
-    description: 'Silueta amplia, lavado oscuro y gráfica de pincel que recorre la prenda.',
+    description: 'Buzo de silueta amplia en negro lavado. Una gráfica de pincel cruza el frente y las mangas.',
     images: ['/images/buzo-frente-espalda.png', '/images/buzo-varkuzo-vkz.png'],
     price: null, color: 'Carbón lavado', available: false, demo: true,
     colorVariants: [{ name: 'Carbón lavado', image: '/images/buzo-frente-espalda.png' }, { name: 'Marfil lavado', image: '/images/buzo-trazo-marfil-concepto.png' }],
   },
   {
     id: 'demo-02', slug: 'camiseta-vkz', name: 'Camiseta VKZ', category: 'Camisetas',
-    description: 'Gráfica de gran escala sobre algodón de tacto pesado.',
+    description: 'Camiseta negra de corte amplio con el monograma VKZ en grande. Una pieza para llevar el trazo al frente.',
     images: ['/images/camiseta-editorial.png'],
     price: null, color: 'Negro lavado', available: false, demo: true, colorVariants: [],
   },
   {
     id: 'demo-03', slug: 'pantalon-trazo', name: 'Pantalón Trazo', category: 'Pantalones',
-    description: 'Denim de silueta amplia con gráfica tonal que recorre las piernas.',
+    description: 'Pantalón de silueta amplia en denim negro lavado, con trazos tonales que recorren las piernas.',
     images: ['/images/pantalon-editorial.png'],
     price: null, color: 'Negro lavado', available: false, demo: true, colorVariants: [],
   },
   {
     id: 'demo-04', slug: 'gorro-vkz', name: 'Gorro VKZ', category: 'Accesorios',
-    description: 'Tejido negro con monograma VKZ bordado al frente.',
+    description: 'Gorro negro tejido con el monograma VKZ al frente. Un detalle pequeño que marca el conjunto.',
     images: ['/images/gorro-vkz.png'],
     price: null, color: 'Negro', available: false, demo: true, colorVariants: [],
   },
   {
     id: 'demo-05', slug: 'buzo-firma', name: 'Buzo Firma', category: 'Buzos',
-    description: 'Firma Varkuzo al frente y monograma VKZ en la espalda.',
+    description: 'Buzo negro de corte amplio. La firma Varkuzo va al frente y el monograma VKZ aparece en la espalda.',
     images: ['/images/buzo-varkuzo-vkz.png', '/images/buzo-frente-espalda.png'],
     price: null, color: 'Negro mineral', available: false, demo: true, colorVariants: [],
   },
