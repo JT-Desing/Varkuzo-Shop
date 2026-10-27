@@ -3,4 +3,5 @@
 .home-hero-shell .ticker{position:relative;z-index:4;min-height:49px}
 .scroll-burn{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;display:block}
 @media(max-width:800px){.home-hero-shell{min-height:620px}}
+@media(max-width:540px){.home-hero-shell{min-height:540px}}
 @media(prefers-reduced-motion:reduce){.scroll-burn{display:none}}
