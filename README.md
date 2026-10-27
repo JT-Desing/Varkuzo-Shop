@@ -11,6 +11,8 @@ Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo adm
 
 El frontend lee los productos publicados desde la WooCommerce Store API. Cuando aún no hay productos, muestra un catálogo de demostración local. No hay checkout ni cobros reales en esta versión.
 
+La página `/descuentos` solo muestra productos publicados que WooCommerce marque como rebajados, tengan existencias y cuyo precio actual sea menor que el regular. Se consulta la Store API cada minuto; el porcentaje se calcula con esos precios. Si todavía no hay promociones reales, aparece un estado vacío. Los filtros de categoría, talla y precios actúan sobre esa lista. Para cambiar la foto central del banner desde WordPress, crea una página con slug `descuentos` y asígnale una imagen destacada recortada con transparencia; el frontend la sirve mediante una ruta interna, con la imagen incluida en el proyecto como respaldo.
+
 La ficha incluye guía para medir tallas, información de entregas locales, preguntas frecuentes y favoritos guardados en el navegador. La tabla de medidas queda identificada como pendiente hasta medir físicamente cada talla. Los favoritos son locales al dispositivo y no requieren cuenta.
 
 El sitio también incluye `/nosotros` (dirección de marca, misión y visión) y `/ayuda` (preguntas frecuentes, entregas, retracto, devoluciones, garantía y pagos). Los apartados legales enlazan normas y guías oficiales colombianas. Son información de orientación para la etapa de diseño; antes de vender habrá que publicar identidad del vendedor, canal de reclamaciones y condiciones operativas definitivas.

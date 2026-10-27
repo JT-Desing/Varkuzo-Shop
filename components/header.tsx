@@ -11,6 +11,7 @@ const links = [
   { href: '/shop?categoria=Buzos', label: 'Buzos' },
   { href: '/shop?categoria=Camisetas', label: 'Camisetas' },
   { href: '/shop?categoria=Pantalones', label: 'Pantalones' },
+  { href: '/descuentos', label: 'Descuentos' },
 ];
 
 export function Header() {
@@ -27,7 +28,7 @@ export function Header() {
   return <header className={`site-header ${pathname === '/' ? 'site-header--home' : ''}`}>
     <LiquidLogo onClick={() => setOpen(false)} />
     <nav className={`main-nav ${open ? 'main-nav--open' : ''}`} aria-label="Navegación principal">
-      {links.map((link) => <Link key={link.label} href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>)}
+      {links.map((link) => <Link key={link.label} href={link.href} className={link.href === '/descuentos' ? 'nav-discounts' : undefined} onClick={() => setOpen(false)}>{link.label}</Link>)}
       <Link href="/nosotros" onClick={() => setOpen(false)}>La marca</Link>
     </nav>
     <div className="header-actions"><Link href="/shop" aria-label="Explorar catálogo" className="search-link">⌕ <span>Buscar</span></Link><Link href="/favoritos" className="header-favorites" aria-label={`Ver favoritos, ${favoriteCount} guardados`}>♡<span>{favoriteCount > 0 ? favoriteCount : ''}</span></Link><span className="header-dot" aria-hidden="true" /><button className="menu-button" type="button" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? 'Cerrar' : 'Menú'} <span>{open ? '×' : '+'}</span></button></div>

@@ -117,5 +117,16 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProduct(slug: string): Promise<Product | undefined> {
   const all = await getProducts();
-  return all.find((product) => product.slug === slug);
+  const found = all.find((product) => product.slug === slug);
+  if (found) return found;
+  const base = process.env.WC_STORE_API_URL;
+  if (!base) return undefined;
+  try {
+    const response = await fetch(`${base}/products?slug=${encodeURIComponent(slug)}&per_page=1`, { next: { revalidate: 60 } });
+    if (!response.ok) return undefined;
+    const [item] = await response.json() as WooProduct[];
+    return item ? mapWooProduct(item) : undefined;
+  } catch {
+    return undefined;
+  }
 }
