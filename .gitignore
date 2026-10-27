@@ -1,0 +1,12 @@
+node_modules
+.next
+.env
+.env.local
+*.log
+*.sql
+*.sql.gz
+.DS_Store
+public/fonts/
+public/images/campaign-alt.png
+public/images/campaign-seated.png
+public/images/campaign-seated-v2.png

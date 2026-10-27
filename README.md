@@ -1,0 +1,34 @@
+# Varkuzo Shop
+
+Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo administrado desde WordPress + WooCommerce. El diseño actual es una dirección visual en revisión; las imágenes y productos marcados como **CONCEPTO** no representan inventario disponible.
+
+## Arranque local
+
+1. Copia `.env.example` como `.env` y asigna tres contraseñas locales diferentes.
+2. Ejecuta `docker compose up --build -d`.
+3. Abre la tienda en `http://localhost:3000` y WordPress en `http://localhost:8080/wp-admin`.
+4. Si WordPress está vacío, completa su instalación inicial, instala WooCommerce y configura moneda COP y zona de venta antes de cargar productos.
+
+El frontend lee los productos publicados desde la WooCommerce Store API. Cuando aún no hay productos, muestra un catálogo de demostración local. No hay checkout ni cobros reales en esta versión.
+
+## Estructura
+
+- `app/`: portada, catálogo y ficha de producto.
+- `components/`: navegación, carrusel, tarjetas, filtros, galería y animaciones.
+- `lib/products.ts`: adaptación de productos WooCommerce y catálogo de demostración.
+- `public/images/`: recursos visuales de la propuesta, separados de los componentes interactivos.
+- `compose.yaml`: frontend, WordPress y MariaDB para desarrollo local.
+
+## Diseño actual
+
+La portada tiene dos banners que cambian cada seis segundos y permiten selección manual. El titular de la primera campaña se presenta como arte gráfico; su texto también está en un encabezado HTML accesible. El logo del header conserva el SVG y aplica una distorsión líquida al pasar el cursor, con una versión estática cuando el usuario prefiere reducir movimiento o WebGL no está disponible. La sección «Piezas esenciales» usa una textura de papel suave y cuatro tarjetas independientes.
+
+## Pendiente antes de vender
+
+- Completar catálogo, variantes e inventario real en WooCommerce.
+- Implementar carrito, pagos, envíos, impuestos y políticas de venta.
+- Diseñar la tipografía original Varkuzo para reemplazar el arte gráfico del titular por texto seleccionable con el mismo trazo.
+- Validar identidad de marca y preparar imágenes y fichas definitivas de producto.
+- Desarrollar y validar la captura y publicación de prendas en 3D.
+
+Las credenciales locales y los respaldos SQL se mantienen fuera de Git. El archivo `.env.example` solo contiene valores de ejemplo.
