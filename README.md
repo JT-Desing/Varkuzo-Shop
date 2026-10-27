@@ -11,6 +11,8 @@ Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo adm
 
 El frontend lee los productos publicados desde la WooCommerce Store API. Cuando aún no hay productos, muestra un catálogo de demostración local. No hay checkout ni cobros reales en esta versión.
 
+La ficha incluye guía para medir tallas, información de entregas locales, preguntas frecuentes y favoritos guardados en el navegador. La tabla de medidas queda identificada como pendiente hasta medir físicamente cada talla. Los favoritos son locales al dispositivo y no requieren cuenta.
+
 ## Estructura
 
 - `app/`: portada, catálogo y ficha de producto.
@@ -29,6 +31,7 @@ La portada tiene dos banners que cambian cada seis segundos y permiten selecció
 - Implementar carrito, pagos, envíos, impuestos y políticas de venta.
 - Diseñar la tipografía original Varkuzo para reemplazar el arte gráfico del titular por texto seleccionable con el mismo trazo.
 - Validar identidad de marca y preparar imágenes y fichas definitivas de producto.
-- Desarrollar y validar la captura y publicación de prendas en 3D.
+- Desarrollar el plugin interno de WordPress para capturar fotos frontal, posterior y de detalle, medidas por talla, estado de revisión y archivo 3D por producto o variante. El archivo no se publicará automáticamente: requiere revisión de fidelidad frente a la prenda física. Después, conectar el visor de la ficha a un modelo aprobado; el control «Explorar 3D» permanece deshabilitado mientras no exista ese flujo.
+- Confirmar mediante muestras físicas las tablas de medidas, composición y cuidados de cada referencia, así como cobertura, plazos y tarifas de entrega antes de habilitar compras.
 
 Las credenciales locales y los respaldos SQL se mantienen fuera de Git. El archivo `.env.example` solo contiene valores de ejemplo.
