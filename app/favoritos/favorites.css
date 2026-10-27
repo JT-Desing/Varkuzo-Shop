@@ -1,0 +1,11 @@
+.favorites-page{min-height:75vh;background:#f4f0e9;padding:clamp(32px,5vw,80px)}
+.favorites-hero{border-bottom:1px solid #c9c1b7;padding:0 0 36px;margin-bottom:36px;max-width:1150px}
+.favorites-hero h1,.favorites-empty h2{font-family:var(--font-display);font-weight:900;line-height:.82;letter-spacing:-.045em}
+.favorites-hero h1{font-size:clamp(82px,12vw,190px);margin:20px 0}
+.favorites-hero>p:last-child{font-size:14px;color:#5b5751;max-width:490px;line-height:1.6}
+.favorites-total{font-size:11px;font-weight:800;letter-spacing:.2em;margin:0 0 22px}
+.favorites-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.favorites-item{min-width:0}.favorites-item-image{position:relative;aspect-ratio:4/5;background:#ded9d1;overflow:hidden}.favorites-item-image img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.favorites-item:hover img{transform:scale(1.04)}.favorites-item-image span{position:absolute;bottom:15px;right:15px;background:#111;color:#fff;padding:10px;font-size:10px;letter-spacing:.1em}.favorites-item small{display:block;margin-top:15px;font-size:10px;letter-spacing:.18em;color:#7b736b}.favorites-item h2{font-family:var(--font-display);font-size:34px;text-transform:uppercase;margin:4px 0 10px}.favorites-item>button{background:none;border:0;border-bottom:1px solid #999;padding:0 0 5px;font-size:10px;letter-spacing:.14em;font-weight:800}.favorites-item>button:hover{color:#901d21;border-color:#901d21}
+.favorites-empty{min-height:360px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;max-width:560px}.favorites-empty>span{font-size:64px;color:#901d21}.favorites-empty h2{font-size:clamp(52px,6vw,80px);margin:12px 0}.favorites-empty p{font-size:14px;color:#5b5751;line-height:1.6}.favorites-empty .button{margin-top:15px}
+@media(max-width:760px){.favorites-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.favorites-item h2{font-size:25px}.favorites-page{padding:34px 20px}}
+@media(max-width:480px){.favorites-grid{grid-template-columns:1fr 1fr}.favorites-item-image span{font-size:8px;padding:7px}.favorites-item h2{font-size:22px}.favorites-hero h1{font-size:78px}}

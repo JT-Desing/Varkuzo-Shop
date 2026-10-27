@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent } from 'react';
 import type { Product } from '@/lib/products';
+import { FavoriteButton } from '@/components/favorite-button';
 import './product-card.css';
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
@@ -49,6 +50,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const secondImage = canCompare ? variants[second].image : '';
 
   return <article className="product-card reveal" style={{ transitionDelay: `${Math.min(index % 4, 3) * 80}ms` }}>
+    <FavoriteButton product={product} compact />
     <Link href={`/producto/${product.slug}`} className="product-card-link" aria-label={`Ver ${product.name}`}>
       <div ref={mediaRef} className={`product-card-image${comparing ? ' is-comparing' : ''}`} onPointerEnter={(event) => updatePointer(event, true)} onPointerMove={updatePointer} onPointerLeave={leavePointer}>
         <img className="product-card-base" src={comparing ? (mobileView === 1 ? secondImage : firstImage) : product.images[0] || '/images/campaign-hero.png'} alt={product.name} loading="lazy" />

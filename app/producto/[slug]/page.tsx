@@ -5,6 +5,7 @@ import { getProduct } from '@/lib/products';
 import { ProductGallery } from '@/components/product-gallery';
 import { ProductOptions } from '@/components/product-options';
 import { FavoriteButton } from '@/components/favorite-button';
+import { FavoriteCount } from '@/components/favorite-count';
 import { ProductBenefits, ProductInformation, ProductViewTabs } from '@/components/product-info';
 import './product-detail.css';
 
@@ -28,6 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="product-detail">
         <div className="detail-topline"><nav className="detail-breadcrumb" aria-label="Ruta de navegación"><Link href="/">INICIO</Link><span>/</span><Link href="/shop">{product.category.toUpperCase()}</Link><span>/</span><span>{product.name.toUpperCase()}</span></nav><ProductViewTabs /></div>
         <div className="detail-title-line"><div><h1>{product.name}</h1><p className="detail-brand">V A R K U Z O</p></div><FavoriteButton product={product} /></div>
+        <FavoriteCount slug={product.slug} />
         <p className="product-detail-price">{product.price || 'PRECIO POR DEFINIR'}</p>
         <p className="product-description">{product.description}</p>
         <div className="product-rule" />

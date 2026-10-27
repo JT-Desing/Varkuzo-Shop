@@ -1,4 +1,5 @@
 .product-card-link{display:block;color:inherit;text-decoration:none}
+.product-card{position:relative}.product-card>.favorite-button--compact{position:absolute;right:13px;top:13px;z-index:4;width:40px;height:40px;background:#f4f0e9e8;border:1px solid #1115;border-radius:50%;display:grid;place-items:center;color:#111}.product-card>.favorite-button--compact.is-saved{color:#901d21}.product-card>.favorite-button--compact:hover{transform:scale(1.08)}
 .product-card-image .product-card-reveal{position:absolute;inset:0;pointer-events:none;mask-image:radial-gradient(circle at 0 0,black 0,transparent 0);-webkit-mask-image:radial-gradient(circle at 0 0,black 0,transparent 0)}
 .product-card-image.is-comparing .product-card-base,.product-card-image.is-comparing .product-card-reveal{transform:none!important;filter:none!important}
 .product-compare{border-top:1px solid #bdb6ad;margin-top:12px}
