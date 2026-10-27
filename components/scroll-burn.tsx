@@ -38,23 +38,41 @@ export function ScrollBurn({ color = '#f1eee8', start = .08, end = .72, blobSize
     const context = canvas?.getContext('2d', { alpha: true });
     if (!canvas || !hero || !context) return;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let width = 0, height = 0, logicalHeight = 0;
+    let width = 0, height = 0, logicalHeight = 0, scale = 1;
     let field = new Float32Array(0);
+    let texturePixels: Uint8ClampedArray | null = null;
     let frame = 0;
     let lastProgress = -1;
     const rgb = /^#([0-9a-f]{6})$/i.exec(color)?.[1] || 'f1eee8';
     const red = parseInt(rgb.slice(0, 2), 16), green = parseInt(rgb.slice(2, 4), 16), blue = parseInt(rgb.slice(4, 6), 16);
+    const texture = new Image();
+    texture.src = '/images/collection-paper.png';
+    texture.onload = () => measure();
 
     const measure = () => {
       const rect = hero.getBoundingClientRect();
       logicalHeight = rect.height;
-      const ratio = Math.min(1, 760 / Math.max(1, rect.width));
-      width = Math.max(1, Math.round(rect.width * ratio));
-      height = Math.max(1, Math.round(rect.height * ratio));
+      scale = Math.min(1, 760 / Math.max(1, rect.width));
+      width = Math.max(1, Math.round(rect.width * scale));
+      height = Math.max(1, Math.round(rect.height * scale));
       canvas.width = width;
       canvas.height = height;
+      texturePixels = null;
+      if (texture.complete && texture.naturalWidth) {
+        const textureCanvas = document.createElement('canvas');
+        textureCanvas.width = width;
+        textureCanvas.height = height;
+        const textureContext = textureCanvas.getContext('2d');
+        if (textureContext) {
+          // The lower edge matches the top of the paper background below the hero.
+          textureContext.translate(0, height);
+          textureContext.scale(1, -1);
+          textureContext.drawImage(texture, 0, 0, width, height);
+          texturePixels = textureContext.getImageData(0, 0, width, height).data;
+        }
+      }
       field = new Float32Array(width * height);
-      const scaledBlob = Math.max(14, blobSize * ratio);
+      const scaledBlob = Math.max(14, blobSize * scale);
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
           const large = valueNoise(x / scaledBlob, y / scaledBlob, seed);
@@ -76,10 +94,10 @@ export function ScrollBurn({ color = '#f1eee8', start = .08, end = .72, blobSize
       if (Math.abs(progress - lastProgress) < .001) return;
       lastProgress = progress;
       if (progress <= 0) { context.clearRect(0, 0, width, height); return; }
-      if (progress >= 1) { context.fillStyle = color; context.fillRect(0, 0, width, height); return; }
       const pixels = context.createImageData(width, height);
       const data = pixels.data;
-      const edge = height * (1 - progress);
+      // Keep the burn close to the seam instead of covering most of the hero.
+      const edge = height - Math.min(height * .2, 150 * scale) * progress;
       const amplitude = Math.max(18, Math.min(58, height * .075));
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
@@ -87,7 +105,10 @@ export function ScrollBurn({ color = '#f1eee8', start = .08, end = .72, blobSize
           const distance = y - edge + field[offset] * amplitude;
           const alpha = clamp((distance + 1.5) / 3, 0, 1);
           const pixel = offset * 4;
-          data[pixel] = red; data[pixel + 1] = green; data[pixel + 2] = blue; data[pixel + 3] = Math.round(alpha * 255);
+          data[pixel] = texturePixels?.[pixel] ?? red;
+          data[pixel + 1] = texturePixels?.[pixel + 1] ?? green;
+          data[pixel + 2] = texturePixels?.[pixel + 2] ?? blue;
+          data[pixel + 3] = Math.round(alpha * 255);
         }
       }
       context.putImageData(pixels, 0, 0);
@@ -104,6 +125,7 @@ export function ScrollBurn({ color = '#f1eee8', start = .08, end = .72, blobSize
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
       motion.removeEventListener('change', schedule);
+      texture.onload = null;
       if (frame) cancelAnimationFrame(frame);
     };
   }, [color, start, end, blobSize, noise, detail, seed]);
