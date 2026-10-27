@@ -15,7 +15,7 @@ const slides = [
     image: '/images/campaign-hero.png',
     alt: 'Editorial urbana Varkuzo con dos modelos',
     title: 'DE AQUÍ PA’ DONDE SEA',
-    artwork: null,
+    artwork: '/images/de-aqui-pa-donde-sea.png',
     description: 'Desde Medellín. Con toda la calle por delante.',
   },
 ];
@@ -48,7 +48,7 @@ export function HeroCarousel() {
           <div className="hero-content">
             <p className="eyebrow">MEDELLÍN / COLOMBIA</p>
             <h1 className="sr-only">{slide.title}</h1>
-            {slide.artwork ? <img className="hero-title-art" src={slide.artwork} alt="" /> : <div className="hero-title-second" aria-hidden="true">DE AQUÍ<br />PA’ DONDE<br /><span>SEA.</span></div>}
+            <img className="hero-title-art" src={slide.artwork} alt="" />
             <p>{slide.description}</p>
             <Link href="/shop" className="button button-outline" tabIndex={active === index ? 0 : -1}>EXPLORAR COLECCIÓN <span>→</span></Link>
           </div>
