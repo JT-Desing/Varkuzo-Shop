@@ -29,6 +29,12 @@
 .about-pillars>div+div{border-left:1px solid #bdb5ab;padding:0 0 0 12%}
 .about-pillars h2{font-size:clamp(60px,6.5vw,112px);margin:30px 0}
 .about-pillars p{max-width:460px;font-size:15px;line-height:1.9;color:#514a42}
+.typeboard-title{position:relative;isolation:isolate}
+.typeboard-line{display:block;white-space:nowrap}
+.typeboard-glyph{display:inline}
+.typeboard-cursor{position:absolute;z-index:2;left:0;top:0;width:.035em;height:calc(var(--cursor-height) * .72);min-width:2px;background:currentColor;transform:translate(var(--cursor-x),calc(var(--cursor-y) + var(--cursor-height) * .14));transition:transform 78ms cubic-bezier(.22,1,.36,1),width 230ms ease,height 230ms ease,border-radius 230ms ease;animation:typeboard-blink .82s ease-in-out infinite;pointer-events:none}
+.typeboard-cursor.is-period{width:.12em;height:.12em;min-width:0;border-radius:50%;transform:translate(var(--cursor-x),calc(var(--cursor-y) + var(--cursor-height) * .75));animation:none}
+@keyframes typeboard-blink{0%,65%,100%{opacity:1}80%{opacity:.35}}
 .about-close{display:grid;grid-template-columns:1fr 1fr;min-height:570px;background:#171717;color:#fff}
 .about-close>div{padding:clamp(60px,7vw,120px);display:flex;align-items:flex-start;justify-content:center;flex-direction:column}
 .about-close h2{font-size:clamp(85px,9vw,160px);line-height:.77;margin:25px 0}
