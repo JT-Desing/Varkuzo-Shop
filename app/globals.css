@@ -42,10 +42,10 @@
 .brand-logo--liquid-ready>img{opacity:0}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
 
-/* Keep carousel controls above the 49px ticker at every viewport height. */
-.home-hero-shell .hero-carousel-controls{bottom:calc(49px + 24px);z-index:6}
-.home-hero-shell .hero-carousel-progress{bottom:49px}
-@media(max-width:540px){.home-hero-shell .hero-carousel-controls{bottom:calc(49px + 16px)}}
+/* The ticker has its own row, so it cannot cover the slide controls. */
+.home-hero-shell .hero-carousel-controls{bottom:24px;z-index:6}
+.home-hero-shell .hero-carousel-progress{bottom:0}
+@media(max-width:540px){.home-hero-shell .hero-carousel-controls{bottom:16px}}
 
 /* Let the editorial paper texture run through the whole collection section. */
 .collection-editorial{padding-top:clamp(34px,4vw,54px);padding-bottom:58px;background-size:100% 100%;background-position:center center}
