@@ -99,7 +99,7 @@ export function ScrollBurn({ color = '#f1eee8', start = .02, end = .34, blobSize
       // Reveal the paper along the section seam as soon as scrolling begins.
       // Finish early enough to be noticeable, while keeping the collection near the banner.
       const easedProgress = progress * progress * (3 - 2 * progress);
-      const edge = height - Math.min(height * .21, 140 * scale) * easedProgress;
+      const edge = height - height * .55 * easedProgress;
       const amplitude = Math.max(18, Math.min(58, height * .075));
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
