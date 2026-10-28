@@ -8,14 +8,14 @@ const slides = [
     image: '/images/campaign-seated-v3.png',
     alt: 'Modelo Varkuzo sentado en arquitectura urbana, mirando de frente',
     title: 'HECHO PARA DESTACAR',
-    artwork: '/images/hecho-para-destacar.png',
+    lines: ['HECHO', 'PARA', 'DESTACAR'],
     description: 'Del barrio de Medellín a tu forma de vestir.',
   },
   {
     image: '/images/campaign-hero.png',
     alt: 'Editorial urbana Varkuzo con dos modelos',
     title: 'DE AQUÍ PA’ DONDE SEA',
-    artwork: '/images/de-aqui-pa-donde-sea.png',
+    lines: ['DE AQUÍ', 'PA’ DONDE', 'SEA'],
     description: 'De esta cuadra salen ideas para ir más lejos.',
   },
 ];
@@ -47,8 +47,9 @@ export function HeroCarousel() {
           <div className="hero-meta"><span>MEDELLÍN<br />COLOMBIA</span></div>
           <div className="hero-content">
             <p className="eyebrow">MEDELLÍN / COLOMBIA</p>
-            {active === index ? <h1 className="sr-only">{slide.title}</h1> : <h2 className="sr-only">{slide.title}</h2>}
-            <img className="hero-title-art" src={slide.artwork} alt="" />
+            {active === index
+              ? <h1 className="hero-title-brocha" aria-label={slide.title}>{slide.lines.map((line, lineIndex) => <span key={lineIndex}>{line}{lineIndex < slide.lines.length - 1 ? ' ' : ''}</span>)}</h1>
+              : <h2 className="hero-title-brocha" aria-label={slide.title}>{slide.lines.map((line, lineIndex) => <span key={lineIndex}>{line}{lineIndex < slide.lines.length - 1 ? ' ' : ''}</span>)}</h2>}
             <p>{slide.description}</p>
             <Link href="/shop" className="button button-outline" tabIndex={active === index ? 0 : -1}>EXPLORAR COLECCIÓN <span>→</span></Link>
           </div>

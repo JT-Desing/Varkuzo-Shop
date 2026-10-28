@@ -6,7 +6,9 @@ node_modules
 *.sql
 *.sql.gz
 .DS_Store
-public/fonts/
+public/fonts/*
+!public/fonts/VarkuzoBrocha-Regular.ttf
+!public/fonts/VarkuzoBrocha-Regular.woff2
 public/images/campaign-alt.png
 public/images/campaign-seated.png
 public/images/campaign-seated-v2.png
