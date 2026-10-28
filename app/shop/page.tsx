@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getProducts } from '@/lib/products';
 import { ShopClient } from '@/components/shop-client';
+import './shop-hero.css';
 
 const categories = ['Buzos', 'Camisetas', 'Pantalones', 'Accesorios'];
 
@@ -18,5 +19,5 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ categoria?: string }> }) {
   const products = await getProducts();
   const params = await searchParams;
-  return <main className="shop-page"><div className="shop-hero"><div><p className="eyebrow">VARKUZO / CATÁLOGO</p><h1>ENCUENTRA<br /><em>TU PIEZA.</em></h1></div><p>Buzos, camisetas y pantalones para llevar el barrio a tu manera. Mira los detalles y elige la pieza que va con vos.</p><span className="shop-hero-index">001 — 003</span></div><ShopClient products={products} initialCategory={params.categoria || 'Todo'} /><div className="shop-end-banner reveal"><span>DE ESTA CUADRA PA’ DONDE SEA</span><strong>VARKUZO</strong><span>MEDELLÍN / COLOMBIA</span></div></main>;
+  return <main className="shop-page"><ShopClient products={products} initialCategory={params.categoria || 'Todo'} /><div className="shop-end-banner reveal"><span>DE ESTA CUADRA PA’ DONDE SEA</span><strong>VARKUZO</strong><span>MEDELLÍN / COLOMBIA</span></div></main>;
 }
