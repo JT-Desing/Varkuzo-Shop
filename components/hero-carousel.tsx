@@ -8,12 +8,14 @@ const slides = [
     image: '/images/campaign-seated-v3.png',
     alt: 'Modelo Varkuzo sentado en arquitectura urbana, mirando de frente',
     title: 'HECHO PARA DESTACAR',
+    titleArt: '/images/hecho-para-destacar.png',
     description: 'Del barrio de Medellín a tu forma de vestir.',
   },
   {
     image: '/images/campaign-hero.png',
     alt: 'Editorial urbana Varkuzo con dos modelos',
     title: 'DE AQUÍ PA’ DONDE SEA',
+    titleArt: '/images/de-aqui-pa-donde-sea.png',
     description: 'De esta cuadra salen ideas para ir más lejos.',
   },
 ];
@@ -22,6 +24,15 @@ export function HeroCarousel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [scrollPaused, setScrollPaused] = useState(false);
+  const [fontReady, setFontReady] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    document.fonts.load('360px "Varkuzo Brocha"', slides[0].title).then(() => {
+      if (mounted && document.fonts.check('360px "Varkuzo Brocha"', slides[0].title)) setFontReady(true);
+    });
+    return () => { mounted = false; };
+  }, []);
 
   useEffect(() => {
     const update = () => setScrollPaused(window.scrollY > 30);
@@ -46,8 +57,8 @@ export function HeroCarousel() {
           <div className="hero-content">
             <p className="eyebrow">MEDELLÍN / COLOMBIA</p>
             {active === index
-              ? <h1 className={`hero-title-logo-font hero-title-logo-font--${index}`}>{slide.title}</h1>
-              : <h2 className={`hero-title-logo-font hero-title-logo-font--${index}`}>{slide.title}</h2>}
+              ? <h1 className={`hero-title-logo-font hero-title-logo-font--${index} ${fontReady ? '' : 'hero-title-logo-font--loading'}`}><span className={fontReady ? '' : 'sr-only'}>{slide.title}</span>{!fontReady && <img src={slide.titleArt} alt="" aria-hidden="true" />}</h1>
+              : <h2 className={`hero-title-logo-font hero-title-logo-font--${index} ${fontReady ? '' : 'hero-title-logo-font--loading'}`}><span className={fontReady ? '' : 'sr-only'}>{slide.title}</span>{!fontReady && <img src={slide.titleArt} alt="" aria-hidden="true" />}</h2>}
             <p>{slide.description}</p>
             <Link href="/shop" className="button button-outline" tabIndex={active === index ? 0 : -1}>EXPLORAR COLECCIÓN <span>→</span></Link>
           </div>
