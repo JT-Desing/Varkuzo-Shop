@@ -9,6 +9,7 @@ const slides = [
     alt: 'Modelo Varkuzo sentado en arquitectura urbana, mirando de frente',
     title: 'HECHO PARA DESTACAR',
     titleArt: '/images/hecho-para-destacar.png',
+    titleLines: ['HECHO', 'PARA', 'DESTACAR'],
     description: 'Del barrio de Medellín a tu forma de vestir.',
   },
   {
@@ -16,6 +17,7 @@ const slides = [
     alt: 'Editorial urbana Varkuzo con dos modelos',
     title: 'DE AQUÍ PA’ DONDE SEA',
     titleArt: '/images/de-aqui-pa-donde-sea.png',
+    titleLines: ['DE AQUÍ', 'PA’ DONDE', 'SEA'],
     description: 'De esta cuadra salen ideas para ir más lejos.',
   },
 ];
@@ -28,8 +30,8 @@ export function HeroCarousel() {
 
   useEffect(() => {
     let mounted = true;
-    document.fonts.load('360px "Varkuzo Brocha"', slides[0].title).then(() => {
-      if (mounted && document.fonts.check('360px "Varkuzo Brocha"', slides[0].title)) setFontReady(true);
+    document.fonts.load('600 120px "Varkuzo Gestual R03"', slides[0].title).then(() => {
+      if (mounted && document.fonts.check('600 120px "Varkuzo Gestual R03"', slides[0].title)) setFontReady(true);
     });
     return () => { mounted = false; };
   }, []);
@@ -57,8 +59,8 @@ export function HeroCarousel() {
           <div className="hero-content">
             <p className="eyebrow">MEDELLÍN / COLOMBIA</p>
             {active === index
-              ? <h1 className={`hero-title-logo-font hero-title-logo-font--${index} ${fontReady ? '' : 'hero-title-logo-font--loading'}`}><span className={fontReady ? '' : 'sr-only'}>{slide.title}</span>{!fontReady && <img src={slide.titleArt} alt="" aria-hidden="true" />}</h1>
-              : <h2 className={`hero-title-logo-font hero-title-logo-font--${index} ${fontReady ? '' : 'hero-title-logo-font--loading'}`}><span className={fontReady ? '' : 'sr-only'}>{slide.title}</span>{!fontReady && <img src={slide.titleArt} alt="" aria-hidden="true" />}</h2>}
+              ? <h1 className={`hero-title-logo-font hero-title-logo-font--${index} ${fontReady ? '' : 'hero-title-logo-font--loading'}`}><span className={fontReady ? '' : 'sr-only'}>{fontReady ? slide.titleLines.map((line) => <span className="hero-title-line" key={line}>{line}</span>) : slide.title}</span>{!fontReady && <img src={slide.titleArt} alt="" aria-hidden="true" />}</h1>
+              : <h2 className={`hero-title-logo-font hero-title-logo-font--${index} ${fontReady ? '' : 'hero-title-logo-font--loading'}`}><span className={fontReady ? '' : 'sr-only'}>{fontReady ? slide.titleLines.map((line) => <span className="hero-title-line" key={line}>{line}</span>) : slide.title}</span>{!fontReady && <img src={slide.titleArt} alt="" aria-hidden="true" />}</h2>}
             <p>{slide.description}</p>
             <Link href="/shop" className="button button-outline" tabIndex={active === index ? 0 : -1}>EXPLORAR COLECCIÓN <span>→</span></Link>
           </div>
