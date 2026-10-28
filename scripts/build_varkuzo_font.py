@@ -6,10 +6,16 @@ from __future__ import annotations
 
 import math
 import random
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.pens.boundsPen import BoundsPen
+from fontTools.pens.cu2quPen import Cu2QuPen
+from fontTools.pens.transformPen import TransformPen
+from fontTools.svgLib.path import parse_path
+from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.ttLib import TTFont
 from shapely.affinity import skew, translate
 from shapely.geometry import LineString, Polygon
@@ -18,6 +24,7 @@ from shapely.ops import unary_union
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "public" / "fonts"
 OUT.mkdir(parents=True, exist_ok=True)
+WORDMARK = ROOT / "public" / "images" / "varkuzo-wordmark.svg"
 
 
 def arc(cx, cy, rx, ry, start, end, count=16):
@@ -173,7 +180,7 @@ def polygon_to_pen(polygon, pen):
         contour(hole.coords)
 
 
-glyph_order = ['.notdef', 'space'] + list(GLYPHS) + [f'num{digit}' for digit in FIGURES] + list(PUNCTUATION) + [f'uni{ord(char):04X}' for char in ACCENTS] + ['invertedExclam', 'invertedQuestion']
+glyph_order = ['.notdef', 'space'] + list(GLYPHS) + [f'num{digit}' for digit in FIGURES] + list(PUNCTUATION) + [f'uni{ord(char):04X}' for char in ACCENTS] + ['invertedExclam', 'invertedQuestion', 'wordmark', 'heroOne', 'heroTwo']
 fb = FontBuilder(1000, isTTF=True)
 fb.setupGlyphOrder(glyph_order)
 cmap = {32: 'space'}
@@ -207,6 +214,22 @@ def add_glyph(name, strokes, seed, advance):
 
 for char, strokes in GLYPHS.items():
     add_glyph(char, strokes, ord(char) * 47, 710 if char not in 'IMW' else (510 if char == 'I' else 800))
+
+# Extract the actual painted contours from the approved wordmark. The vector
+# consists of one primary path per letter plus small splatters and the swoosh.
+# Using these paths is materially closer than drawing geometric skeletons.
+wordmark_paths = list(ET.parse(WORDMARK).getroot())
+for char, path_index in {'V': 0, 'A': 3, 'R': 7, 'K': 1, 'U': 6, 'Z': 4, 'O': 5}.items():
+    path = wordmark_paths[path_index]
+    bounds_pen = BoundsPen(None)
+    parse_path(path.attrib['d'], bounds_pen)
+    x_min, y_min, x_max, y_max = bounds_pen.bounds
+    scale = 720 / (y_max - y_min)
+    pen = TTGlyphPen(None)
+    transformed = TransformPen(Cu2QuPen(pen, max_err=1.0), (scale, 0, 0, -scale, 45 - scale * x_min, scale * y_max))
+    parse_path(path.attrib['d'], transformed)
+    glyphs[char] = pen.glyph()
+    metrics[char] = (round((x_max - x_min) * scale + 90), 0)
 for digit, strokes in FIGURES.items():
     add_glyph(f'num{digit}', strokes, ord(digit) * 47, 700)
 for name, (_, strokes, advance) in PUNCTUATION.items():
@@ -215,6 +238,27 @@ for char, (base, accent) in ACCENTS.items():
     add_glyph(f'uni{ord(char):04X}', GLYPHS[base] + accent, ord(char) * 47, metrics[base][0])
 add_glyph('invertedExclam', [[(215, 700), (225, 680)], [(230, 495), (210, 10)]], 97, 360)
 add_glyph('invertedQuestion', [[(270, 700), (275, 680)], [(280, 500), (140, 350), (80, 190), (190, 20), (420, 0), (510, 170)]], 99, 590)
+
+
+def add_svg_lettering(name, source, cap_height=900):
+    root = ET.parse(source).getroot()
+    width, height = float(root.attrib['width']), float(root.attrib['height'])
+    scale = cap_height / height
+    pen = TTGlyphPen(None)
+    quadratic = Cu2QuPen(pen, max_err=1.0)
+    for path in root:
+        transform = path.attrib.get('transform', '')
+        offset = transform.removeprefix('translate(').removesuffix(')').replace(',', ' ').split()
+        tx, ty = (float(offset[0]), float(offset[1])) if len(offset) == 2 else (0, 0)
+        transformed = TransformPen(quadratic, (scale, 0, 0, -scale, 35 + scale * tx, scale * (height - ty)))
+        parse_path(path.attrib['d'], transformed)
+    glyphs[name] = pen.glyph()
+    metrics[name] = (round(width * scale + 70), 0)
+
+
+add_svg_lettering('wordmark', WORDMARK, 900)
+add_svg_lettering('heroOne', ROOT / 'design' / 'lettering' / 'hecho-para-destacar.svg', 900)
+add_svg_lettering('heroTwo', ROOT / 'design' / 'lettering' / 'de-aqui-pa-donde-sea.svg', 900)
 fb.setupGlyf(glyphs)
 fb.setupHorizontalMetrics(metrics)
 fb.setupHorizontalHeader(ascent=1030, descent=-180)
@@ -233,6 +277,14 @@ fb.setupMaxp()
 ttf = OUT / 'VarkuzoBrocha-Regular.ttf'
 fb.save(ttf)
 font = TTFont(ttf)
+addOpenTypeFeaturesFromString(font, '''
+feature liga {
+    sub V A R K U Z O by wordmark;
+    sub H E C H O space P A R A space D E S T A C A R by heroOne;
+    sub D E space A Q U uni00CD space P A apostrophe space D O N D E space S E A by heroTwo;
+} liga;
+''')
+font.save(ttf)
 font.flavor = 'woff2'
 woff = OUT / 'VarkuzoBrocha-Regular.woff2'
 font.save(woff)

@@ -90,10 +90,12 @@
 
 @media(prefers-reduced-motion:no-preference){html.motion-enabled .reveal:not(.is-visible){opacity:0;transform:translateY(32px)}}
 
-/* The campaign headlines are selectable text in Varkuzo's original display face. */
-.hero-carousel .hero-title-brocha{position:relative;display:flex;flex-direction:column;align-items:flex-start;width:max-content;max-width:100%;margin:18px 0 40px;color:#f3eadd;font-family:'Varkuzo Brocha',Impact,sans-serif;font-size:clamp(57px,6.2vw,102px);font-weight:400;line-height:.9;letter-spacing:-.055em;text-transform:uppercase;text-shadow:0 4px 18px #000b;transform:rotate(-4deg)}
-.hero-title-brocha span{display:block;white-space:nowrap}.hero-title-brocha span:nth-child(2){margin-left:.3em}.hero-title-brocha span:last-child{position:relative;margin-left:-.05em}.hero-title-brocha span:last-child::after{content:'';position:absolute;left:13%;right:1%;bottom:-.12em;height:.065em;min-height:4px;background:#a72227;transform:rotate(-4deg) skew(-24deg);box-shadow:0 2px 0 #6e171a}
-@media(max-width:800px){.hero-carousel .hero-title-brocha{font-size:clamp(59px,10.8vw,87px)}}
-@media(max-width:540px){.hero-carousel .hero-title-brocha{font-size:clamp(48px,14.8vw,66px);margin:16px 0 30px}.hero-title-brocha span:nth-child(2){margin-left:.18em}}
+/* OpenType ligatures contain the approved brush contours; these are real, selectable headings. */
+.hero-carousel .hero-title-logo-font{position:relative;display:block;width:max-content;max-width:100%;margin:8px 0 10px;color:#f3eadd;font-family:'Varkuzo Brocha',Impact,sans-serif;font-size:clamp(250px,25vw,360px);font-weight:400;font-feature-settings:'liga' 1;font-variant-ligatures:common-ligatures;line-height:1;letter-spacing:0;white-space:nowrap;user-select:text;text-shadow:0 4px 18px #0008}
+.hero-title-logo-font::after{content:'';position:absolute;left:15%;width:84%;bottom:2%;height:19%;background:url('/images/hecho-para-destacar-swash.png') center/contain no-repeat;pointer-events:none}
+.hero-title-logo-font--1::after{background-image:url('/images/de-aqui-pa-donde-sea-swash.png')}
+.hero-title-logo-font::selection{color:#fff;background:#9e2024}
+@media(max-width:800px){.hero-carousel .hero-title-logo-font{font-size:clamp(240px,42vw,330px)}}
+@media(max-width:540px){.hero-carousel .hero-title-logo-font{font-size:clamp(205px,62vw,260px);margin:6px 0 10px}}
 
 
