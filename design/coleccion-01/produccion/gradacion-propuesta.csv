@@ -1,0 +1,44 @@
+﻿bloque,punto_de_medida,S_cm,M_cm,L_cm,XL_cm,estado
+CAM-BOX-01,pecho ancho a 2.5 cm sisa,62,64,66,68,gradación preliminar; patronista debe validar
+CAM-BOX-01,largo centro espalda desde cuello,71,72,73,74,gradación preliminar; patronista debe validar
+CAM-BOX-01,hombro a hombro,58,60,62,64,gradación preliminar; patronista debe validar
+CAM-BOX-01,largo manga desde hombro,22,23,24,25,gradación preliminar; patronista debe validar
+CAM-BOX-01,boca manga ancho,21.5,22,22.5,23.0,gradación preliminar; patronista debe validar
+BUZ-HOOD-01,pecho ancho a 2.5 cm sisa,66,68,70,72,gradación preliminar; patronista debe validar
+BUZ-HOOD-01,largo centro espalda desde cuello,70,71,72,73,gradación preliminar; patronista debe validar
+BUZ-HOOD-01,hombro a hombro,63,65,67,69,gradación preliminar; patronista debe validar
+BUZ-HOOD-01,largo manga desde hombro,59,60,61,62,gradación preliminar; patronista debe validar
+BUZ-HOOD-01,boca bajo sin estirar,48,50,52,54,gradación preliminar; patronista debe validar
+BUZ-ZIP-01,pecho ancho a 2.5 cm sisa,66,68,70,72,gradación preliminar; patronista debe validar
+BUZ-ZIP-01,largo centro espalda desde cuello,70,71,72,73,gradación preliminar; patronista debe validar
+BUZ-ZIP-01,hombro a hombro,63,65,67,69,gradación preliminar; patronista debe validar
+BUZ-ZIP-01,largo manga desde hombro,59,60,61,62,gradación preliminar; patronista debe validar
+BUZ-ZIP-01,boca bajo sin estirar,48,50,52,54,gradación preliminar; patronista debe validar
+DEN-WIDE-01,cintura ancho pretina cerrada,40,42,44,46,gradación preliminar; patronista debe validar
+DEN-WIDE-01,cadera ancho 20 cm bajo cintura,56,58,60,62,gradación preliminar; patronista debe validar
+DEN-WIDE-01,tiro delantero incl pretina,33.5,34,34.5,35.0,gradación preliminar; patronista debe validar
+DEN-WIDE-01,tiro trasero incl pretina,43.5,44,44.5,45.0,gradación preliminar; patronista debe validar
+DEN-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,36,37,38,39,gradación preliminar; patronista debe validar
+DEN-WIDE-01,bota ancho,26.5,27,27.5,28.0,gradación preliminar; patronista debe validar
+DEN-WIDE-01,entrepierna,78,79,80,81,gradación preliminar; patronista debe validar
+CRG-WIDE-01,cintura ancho pretina cerrada,40,42,44,46,gradación preliminar; patronista debe validar
+CRG-WIDE-01,cadera ancho 20 cm bajo cintura,56,58,60,62,gradación preliminar; patronista debe validar
+CRG-WIDE-01,tiro delantero incl pretina,33.5,34,34.5,35.0,gradación preliminar; patronista debe validar
+CRG-WIDE-01,tiro trasero incl pretina,43.5,44,44.5,45.0,gradación preliminar; patronista debe validar
+CRG-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,36,37,38,39,gradación preliminar; patronista debe validar
+CRG-WIDE-01,bota ancho,26.5,27,27.5,28.0,gradación preliminar; patronista debe validar
+CRG-WIDE-01,entrepierna,78,79,80,81,gradación preliminar; patronista debe validar
+CAR-WIDE-01,cintura ancho pretina cerrada,40,42,44,46,gradación preliminar; patronista debe validar
+CAR-WIDE-01,cadera ancho 20 cm bajo cintura,56,58,60,62,gradación preliminar; patronista debe validar
+CAR-WIDE-01,tiro delantero incl pretina,33.5,34,34.5,35.0,gradación preliminar; patronista debe validar
+CAR-WIDE-01,tiro trasero incl pretina,43.5,44,44.5,45.0,gradación preliminar; patronista debe validar
+CAR-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,36,37,38,39,gradación preliminar; patronista debe validar
+CAR-WIDE-01,bota ancho,26.5,27,27.5,28.0,gradación preliminar; patronista debe validar
+CAR-WIDE-01,entrepierna,78,79,80,81,gradación preliminar; patronista debe validar
+SAR-WIDE-01,cintura ancho pretina cerrada,40,42,44,46,gradación preliminar; patronista debe validar
+SAR-WIDE-01,cadera ancho 20 cm bajo cintura,56,58,60,62,gradación preliminar; patronista debe validar
+SAR-WIDE-01,tiro delantero incl pretina,33.5,34,34.5,35.0,gradación preliminar; patronista debe validar
+SAR-WIDE-01,tiro trasero incl pretina,43.5,44,44.5,45.0,gradación preliminar; patronista debe validar
+SAR-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,36,37,38,39,gradación preliminar; patronista debe validar
+SAR-WIDE-01,bota ancho,26.5,27,27.5,28.0,gradación preliminar; patronista debe validar
+SAR-WIDE-01,entrepierna,78,79,80,81,gradación preliminar; patronista debe validar

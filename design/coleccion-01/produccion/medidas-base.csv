@@ -1,0 +1,44 @@
+﻿bloque,punto_de_medida,talla_base,objetivo_cm,tolerancia_muestra_cm,estado
+CAM-BOX-01,pecho ancho a 2.5 cm sisa,M,64,1,propuesta de fit; confirmar en muestra física
+CAM-BOX-01,largo centro espalda desde cuello,M,72,1,propuesta de fit; confirmar en muestra física
+CAM-BOX-01,hombro a hombro,M,60,1,propuesta de fit; confirmar en muestra física
+CAM-BOX-01,largo manga desde hombro,M,23,0.7,propuesta de fit; confirmar en muestra física
+CAM-BOX-01,boca manga ancho,M,22,0.5,propuesta de fit; confirmar en muestra física
+BUZ-HOOD-01,pecho ancho a 2.5 cm sisa,M,68,1,propuesta de fit; confirmar en muestra física
+BUZ-HOOD-01,largo centro espalda desde cuello,M,71,1,propuesta de fit; confirmar en muestra física
+BUZ-HOOD-01,hombro a hombro,M,65,1,propuesta de fit; confirmar en muestra física
+BUZ-HOOD-01,largo manga desde hombro,M,60,0.7,propuesta de fit; confirmar en muestra física
+BUZ-HOOD-01,boca bajo sin estirar,M,50,1,propuesta de fit; confirmar en muestra física
+BUZ-ZIP-01,pecho ancho a 2.5 cm sisa,M,68,1,propuesta de fit; confirmar en muestra física
+BUZ-ZIP-01,largo centro espalda desde cuello,M,71,1,propuesta de fit; confirmar en muestra física
+BUZ-ZIP-01,hombro a hombro,M,65,1,propuesta de fit; confirmar en muestra física
+BUZ-ZIP-01,largo manga desde hombro,M,60,0.7,propuesta de fit; confirmar en muestra física
+BUZ-ZIP-01,boca bajo sin estirar,M,50,1,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,cintura ancho pretina cerrada,M,42,0.7,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,cadera ancho 20 cm bajo cintura,M,58,1,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,tiro delantero incl pretina,M,34,0.7,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,tiro trasero incl pretina,M,44,0.7,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,M,37,0.7,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,bota ancho,M,27,0.7,propuesta de fit; confirmar en muestra física
+DEN-WIDE-01,entrepierna,M,79,1,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,cintura ancho pretina cerrada,M,42,0.7,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,cadera ancho 20 cm bajo cintura,M,58,1,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,tiro delantero incl pretina,M,34,0.7,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,tiro trasero incl pretina,M,44,0.7,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,M,37,0.7,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,bota ancho,M,27,0.7,propuesta de fit; confirmar en muestra física
+CRG-WIDE-01,entrepierna,M,79,1,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,cintura ancho pretina cerrada,M,42,0.7,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,cadera ancho 20 cm bajo cintura,M,58,1,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,tiro delantero incl pretina,M,34,0.7,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,tiro trasero incl pretina,M,44,0.7,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,M,37,0.7,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,bota ancho,M,27,0.7,propuesta de fit; confirmar en muestra física
+CAR-WIDE-01,entrepierna,M,79,1,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,cintura ancho pretina cerrada,M,42,0.7,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,cadera ancho 20 cm bajo cintura,M,58,1,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,tiro delantero incl pretina,M,34,0.7,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,tiro trasero incl pretina,M,44,0.7,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,muslo ancho 2.5 cm bajo entrepierna,M,37,0.7,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,bota ancho,M,27,0.7,propuesta de fit; confirmar en muestra física
+SAR-WIDE-01,entrepierna,M,79,1,propuesta de fit; confirmar en muestra física
