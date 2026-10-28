@@ -5,10 +5,13 @@ Este paquete reúne **30 propuestas de conjuntos** para presentar a talleres y p
 ## Archivos
 
 - `Varkuzo_30_looks_y_marquillas.pdf`: presentación visual y sistema de marquillas.
-- `looks/VKZ-01.jpg` a `looks/VKZ-30.jpg`: imágenes individuales para selección.
+- `looks/VKZ-01.jpg` a `looks/VKZ-30.jpg`: imágenes individuales de exploración.
+- `looks-marca/`: seis montajes adicionales con el logo completo o el monograma VKZ aplicado a la prenda. Son propuestas de ubicación y escala, pendientes de arte final de producción.
 - `fichas.csv` y `fichas.json`: datos editables por referencia.
 - `laminas/`: cinco láminas originales de exploración visual.
 - `generar_catalogo.py`: genera de nuevo el PDF y las fichas.
+
+La portada presenta tres looks completos y centrados. El nombre de cada look utiliza la fuente Varkuzo Brocha; la información técnica conserva una tipografía de lectura. La página de marquillas compara la opción clara con **Noche Varkuzo**, una alternativa negra con logo blanco y acento vino. El PDF incluye la etiqueta colgante de referencia.
 
 ## Cómo pedir una cotización útil
 
@@ -18,6 +21,6 @@ Este paquete reúne **30 propuestas de conjuntos** para presentar a talleres y p
 4. Pedir una muestra de talla base M, luego tabla de medidas y gradación S–XL. Validar pecho, largo, hombro, manga, cintura, cadera, tiro, muslo, entrepierna y boca.
 5. Hacer pruebas de encogimiento, solidez de color, resistencia de costuras y lavado de la gráfica antes de ordenar la producción.
 
-Las imágenes son **conceptos generados para dirección creativa**. Las gráficas y detalles deben redibujarse como artes de producción y comprobarse en una prenda física. El logo Varkuzo del dossier proviene del archivo de marca aprobado; los looks no pretenden representar prendas ya fabricadas.
+Las imágenes son **conceptos generados para dirección creativa**. Las gráficas y detalles deben redibujarse como artes de producción y comprobarse en una prenda física. El logo Varkuzo del dossier proviene del archivo de marca aprobado; los seis montajes de marca son simulaciones y los looks no pretenden representar prendas ya fabricadas.
 
 La marquilla de marca y la etiqueta colgante son propuestas visuales. El etiquetado técnico obligatorio para comercializar requiere una pieza adicional con información verificada de cada producto.

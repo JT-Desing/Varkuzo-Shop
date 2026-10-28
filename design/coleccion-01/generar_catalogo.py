@@ -22,6 +22,19 @@ INK = colors.HexColor("#171516")
 RED = colors.HexColor("#881b23")
 MUTED = colors.HexColor("#5f5a57")
 PAPER = colors.HexColor("#f8f7f4")
+CREAM = colors.HexColor("#eee9df")
+BRAND_FONT = "VarkuzoBrocha"
+
+# Aplicaciones puntuales de marca. Las posiciones se ajustan a cada foto conceptual;
+# el arte final y su escala se fijan después de aprobar la muestra física.
+BRAND_APPLICATIONS = {
+    3: ("VARKUZO completo", "pecho centrado, 18 cm", "logo", "hueso", (0.46, 0.27, 0.26)),
+    7: ("VKZ", "pecho izquierdo, 8 cm", "monogram", "negro", (0.35, 0.25, 0.13)),
+    16: ("VARKUZO completo", "pecho centrado, 19 cm", "logo", "gris tonal", (0.47, 0.28, 0.27)),
+    23: ("VKZ", "pecho izquierdo, 7 cm", "monogram", "hueso", (0.35, 0.28, 0.12)),
+    28: ("VKZ", "pecho izquierdo, 7 cm", "monogram", "hueso", (0.37, 0.27, 0.12)),
+    29: ("VARKUZO completo", "pecho centrado, 18 cm", "logo", "hueso", (0.47, 0.27, 0.25)),
+}
 
 # Nombre, superior, inferior, paleta, arte/acabado, rasgo de confección.
 LOOKS = [
@@ -61,6 +74,33 @@ def font_setup():
     font_dir = Path("C:/Windows/Fonts")
     pdfmetrics.registerFont(TTFont("Arial", str(font_dir / "arial.ttf")))
     pdfmetrics.registerFont(TTFont("ArialBold", str(font_dir / "arialbd.ttf")))
+    pdfmetrics.registerFont(TTFont(BRAND_FONT, str(PROJECT / "public" / "fonts" / "VarkuzoBrocha-Regular.ttf")))
+
+def ink_cutout(path, light=False, tone=None):
+    """Transforma una marca negra sobre blanco en tinta transparente para un montaje."""
+    src = Image.open(path).convert("L")
+    alpha = ImageOps.invert(src).point(lambda p: 255 if p > 75 else int(p * 1.6))
+    rgb = tone or ((246, 239, 224) if light else (24, 22, 21))
+    out = Image.new("RGBA", src.size, (*rgb, 0)); out.putalpha(alpha)
+    return out
+
+def branded_look_path(n):
+    if n not in BRAND_APPLICATIONS:
+        return ROOT / "looks" / f"VKZ-{n:02d}.jpg"
+    return ROOT / "looks-marca" / f"VKZ-{n:02d}.png"
+
+def make_branded_looks(logo, monogram):
+    target = ROOT / "looks-marca"; target.mkdir(exist_ok=True)
+    for n, (_, _, kind, ink, (cx, cy, relative_width)) in BRAND_APPLICATIONS.items():
+        base = Image.open(ROOT / "looks" / f"VKZ-{n:02d}.jpg").convert("RGBA")
+        tone = (78, 77, 73) if ink == "gris tonal" else None
+        mark = ink_cutout(logo if kind == "logo" else monogram, ink != "negro" and ink != "gris tonal", tone)
+        width = round(base.width * relative_width)
+        mark.thumbnail((width, base.height // 8), Image.Resampling.LANCZOS)
+        x = round(base.width * cx - mark.width / 2)
+        y = round(base.height * cy - mark.height / 2)
+        base.alpha_composite(mark, (x, y))
+        base.save(target / f"VKZ-{n:02d}.png", optimize=True)
 
 def draw_wrapped(c, value, x, y, max_width, size=10, leading=15, font="Arial", color=INK):
     c.setFont(font, size); c.setFillColor(color)
@@ -75,8 +115,8 @@ def draw_wrapped(c, value, x, y, max_width, size=10, leading=15, font="Arial", c
     return y
 
 def section(c, label, value, x, y, width):
-    c.setFont("ArialBold", 7); c.setFillColor(RED); c.drawString(x, y, label.upper())
-    return draw_wrapped(c, value, x, y - 17, width, 9.5, 14) - 12
+    c.setFont("ArialBold", 6.8); c.setFillColor(RED); c.drawString(x, y, label.upper())
+    return draw_wrapped(c, value, x, y - 13, width, 8.5, 11.5) - 7
 
 def header(c, index=None):
     c.setFillColor(INK); c.rect(0, PAGE_H - 42, PAGE_W, 42, stroke=0, fill=1)
@@ -126,59 +166,111 @@ def spec_bottom(bottom):
 def draw_look(c, n, look):
     name, top, bottom, palette, art, detail = look
     c.setFillColor(PAPER); c.rect(0, 0, PAGE_W, PAGE_H, stroke=0, fill=1); header(c, n)
-    c.setFont("ArialBold", 23); c.setFillColor(INK); c.drawString(38, PAGE_H - 84, f"{n:02d} / {name.upper()}")
-    c.setFont("Arial", 8); c.setFillColor(RED); c.drawString(38, PAGE_H - 103, "PROPUESTA DE LOOK · VISTA CONCEPTUAL")
-    img = Image.open(ROOT / "looks" / f"VKZ-{n:02d}.jpg")
+    c.setFont("ArialBold", 11); c.setFillColor(RED); c.drawString(38, PAGE_H - 83, f"{n:02d} / LOOK")
+    title = name.upper(); font_size = 35
+    while pdfmetrics.stringWidth(title, BRAND_FONT, font_size) > PAGE_W - 134 and font_size > 23:
+        font_size -= 1
+    c.setFont(BRAND_FONT, font_size); c.setFillColor(INK); c.drawString(105, PAGE_H - 87, title)
+    c.setStrokeColor(RED); c.setLineWidth(2); c.line(38, PAGE_H - 101, PAGE_W - 38, PAGE_H - 101)
+    c.setFont("Arial", 7.5); c.setFillColor(MUTED); c.drawString(38, PAGE_H - 118, "DIRECCIÓN DE PRODUCTO / PROTOTIPO POR VALIDAR")
+    img_path = branded_look_path(n)
+    img = Image.open(img_path)
     iw, ih = img.size
-    target_h = 565; target_w = target_h * iw / ih
-    c.drawImage(str(ROOT / "looks" / f"VKZ-{n:02d}.jpg"), 35, PAGE_H - 685, width=target_w, height=target_h)
-    x = 335; y = PAGE_H - 142; width = PAGE_W - x - 37
+    target_h = 554; target_w = target_h * iw / ih
+    c.drawImage(str(img_path), 35, PAGE_H - 690, width=target_w, height=target_h)
+    c.setFont("Arial", 7); c.setFillColor(MUTED)
+    c.drawCentredString(35 + target_w/2, PAGE_H - 703, "VISTA CONCEPTUAL · FRENTE DE LOOK")
+    x = 335; y = PAGE_H - 145; width = PAGE_W - x - 37
     y = section(c, "Superior", top, x, y, width)
     y = section(c, "Inferior", bottom, x, y, width)
     y = section(c, "Paleta", palette, x, y, width)
     y = section(c, "Gráfica / técnica", art + ". Explorar serigrafía, bordado o aplique según muestra.", x, y, width)
     y = section(c, "Construcción", detail + ". Preparar prototipo frente y espalda.", x, y, width)
+    if n in BRAND_APPLICATIONS:
+        mark, placement, _, ink, _ = BRAND_APPLICATIONS[n]
+        y = section(c, "Marca aplicada en simulación", f"{mark}; {placement}; tinta {ink}. Validar escala en muestra.", x, y, width)
     y = section(c, "Tela superior", material_top(top), x, y, width)
     y = section(c, "Tela inferior", material_bottom(bottom), x, y, width)
     y = section(c, "Silueta y confección", spec_top(top) + " " + spec_bottom(bottom), x, y, width)
     y = section(c, "Muestra a pedir", "Talla base M, tabla de medidas, ficha de consumo, prueba de lavado y costo por 30/60/120 unidades.", x, y, width)
+    if y < 145:
+        raise ValueError(f"La ficha {n:02d} invade la nota inferior: y={y:.1f}")
     c.setFillColor(colors.HexColor("#eee8df")); c.roundRect(x, 55, width, 82, 6, stroke=0, fill=1)
     draw_wrapped(c, "Concepto visual para selección. La ilustración puede diferir de una prenda confeccionada; proporciones, estampas y color se fijan con la primera muestra física.", x+12, 111, width-24, 8.4, 12, color=MUTED)
     c.showPage()
 
 def draw_cover(c, logo):
     c.setFillColor(PAPER); c.rect(0,0,PAGE_W,PAGE_H,fill=1,stroke=0)
-    c.setFillColor(INK); c.rect(0,PAGE_H-300,PAGE_W,300,fill=1,stroke=0)
-    c.drawImage(str(ROOT / "logo-blanco.png"), 45, PAGE_H-160, width=315, height=158, preserveAspectRatio=True, mask='auto')
-    c.setFont("ArialBold", 31); c.setFillColor(INK); c.drawString(42, PAGE_H-365, "30 LOOKS / EDICIÓN 01")
-    c.setFont("Arial", 13); c.setFillColor(RED); c.drawString(42, PAGE_H-390, "DE MEDELLÍN PA’ CUALQUIER LADO")
-    y=PAGE_H-440
-    for text in ["Buzos, camisetas y pantalones de silueta amplia.", "Gráficas originales con trazos de brocha, costuras y color.", "Documento de selección y cotización para proveedores."]:
-        y=draw_wrapped(c,text,42,y,PAGE_W-84,12,20)-7
-    c.setFillColor(MUTED);c.setFont("Arial",9);c.drawString(42,70,"Conceptos visuales · No son fotos de producto fabricado · Octubre 2026")
+    c.setFillColor(INK); c.rect(0,PAGE_H-403,PAGE_W,403,fill=1,stroke=0)
+    c.setFillColor(RED); c.rect(0,PAGE_H-407,PAGE_W,4,fill=1,stroke=0)
+    c.drawImage(str(ROOT / "logo-blanco.png"), 145, PAGE_H-179, width=305, height=152, preserveAspectRatio=True, mask='auto')
+    c.setFillColor(CREAM); c.setFont("ArialBold", 39)
+    c.drawCentredString(PAGE_W/2, PAGE_H-238, "30 LOOKS")
+    c.setFillColor(colors.HexColor("#cbbfb5")); c.setFont("ArialBold", 12)
+    c.drawCentredString(PAGE_W/2, PAGE_H-263, "COLECCIÓN CONCEPTUAL / EDICIÓN 01")
+    c.setFillColor(CREAM); c.setFont("Arial", 10)
+    c.drawCentredString(PAGE_W/2, PAGE_H-291, "BUZOS · CAMISETAS · PANTALONES")
+    c.setFillColor(colors.HexColor("#b25155")); c.rect(190,PAGE_H-322,215,2,fill=1,stroke=0)
+    c.setFillColor(CREAM); c.setFont("ArialBold", 10)
+    c.drawCentredString(PAGE_W/2, PAGE_H-347, "DE MEDELLÍN PA’ CUALQUIER LADO")
+    # Una muestra de siluetas, sin cargar la portada con detalles de ficha.
+    for idx, n in enumerate((1, 7, 20)):
+        x = 38 + idx * 174
+        img = Image.open(branded_look_path(n)); iw, ih = img.size
+        box_w, box_h = 161, 250
+        scale = min(box_w / iw, box_h / ih)
+        draw_w, draw_h = iw*scale, ih*scale
+        c.saveState()
+        p = c.beginPath(); p.rect(x, 168, box_w, box_h); c.clipPath(p, stroke=0)
+        c.drawImage(str(branded_look_path(n)), x+(box_w-draw_w)/2, 168, draw_w, draw_h)
+        c.restoreState()
+        c.setFillColor(INK); c.setFont("ArialBold", 7)
+        c.drawString(x, 155, f"VKZ-{n:02d} / {LOOKS[n-1][0].upper()}")
+    c.setFillColor(RED); c.rect(38, 126, PAGE_W-76, 2, fill=1, stroke=0)
+    c.setFillColor(INK); c.setFont("ArialBold", 12)
+    c.drawCentredString(PAGE_W/2, 104, "DOSSIER PARA SELECCIÓN Y COTIZACIÓN")
+    c.setFont("Arial", 8.5); c.setFillColor(MUTED)
+    c.drawCentredString(PAGE_W/2, 82, "Conceptos visuales. Materiales, medidas y gráficas sujetos a prototipo.")
+    c.drawCentredString(PAGE_W/2, 54, "OCTUBRE 2026  /  MEDELLÍN, COLOMBIA")
     c.showPage()
 
 def draw_label_pages(c, logo, monogram):
     c.setFillColor(PAPER); c.rect(0,0,PAGE_W,PAGE_H,fill=1,stroke=0); header(c)
     c.setFont("ArialBold",24);c.setFillColor(INK);c.drawString(38,PAGE_H-88,"SISTEMA DE MARQUILLAS")
-    c.setFont("Arial",10);c.setFillColor(MUTED);c.drawString(38,PAGE_H-110,"Dos aplicaciones de la identidad aprobada; producción sujeta a prueba real.")
-    c.setFillColor(colors.white);c.roundRect(55,412,485,247,8,stroke=0,fill=1)
-    c.setStrokeColor(INK);c.rect(104,510,386,90,stroke=1,fill=0)
-    c.drawImage(str(logo),135,522,width=230,height=64,preserveAspectRatio=True,mask='auto')
-    c.setFont("ArialBold",11);c.setFillColor(INK);c.drawString(105,477,"MARQUILLA INTERIOR DE CUELLO")
-    draw_wrapped(c,"Opción inicial: etiqueta satinada estampada de 70 × 25 mm. Logo de pincel a 48 mm de ancho, negro sobre crudo. Costura en cuello posterior. Talla en pestaña separada de 12 × 20 mm. Probar legibilidad a tamaño real.",105,456,386,9,14)
-    c.setFillColor(colors.HexColor("#efeae3"));c.roundRect(55,140,485,245,8,stroke=0,fill=1)
-    c.setFillColor(INK);c.roundRect(174,178,246,175,4,stroke=0,fill=1)
-    c.setFillColor(colors.white);c.circle(297,340,6,fill=1,stroke=0)
-    c.drawImage(str(ROOT / "logo-blanco.png"),218,301,width=158,height=42,preserveAspectRatio=True,mask='auto')
-    c.setFont("Arial",8);c.drawCentredString(297,283,"DE MEDELLÍN PA’ CUALQUIER LADO")
-    c.setStrokeColor(colors.HexColor("#a8a29b"));c.line(200,268,394,268)
-    c.setFont("Arial",8);c.drawString(200,246,"REF: ________   TALLA: _____")
-    c.drawString(200,230,"COLOR: __________________")
-    c.drawString(200,214,"PRECIO COP: ______________")
-    c.setFont("Arial",7);c.drawCentredString(297,190,"QR / CÓDIGO SEGÚN SISTEMA FINAL")
-    c.setFont("ArialBold",11);c.setFillColor(INK);c.drawString(55,125,"ETIQUETA COLGANTE / HANGTAG")
-    draw_wrapped(c,"Cartulina de 350–400 g/m², acabado mate. Formato propuesto 60 × 100 mm, perforación de 4 mm a 7 mm del borde superior, cordón negro. Reverso: campos de SKU, talla, color, precio COP y código de barras/QR real cuando exista inventario.",55,107,485,9,13)
+    c.setFont("Arial",10);c.setFillColor(MUTED);c.drawString(38,PAGE_H-110,"Dos rutas para el cuello, lado a lado. Elegir tras muestra y prueba de lavado.")
+    card_y, card_h, card_w = 418, 247, 252
+    for x in (38, 305):
+        c.setFillColor(colors.white); c.roundRect(x,card_y,card_w,card_h,7,fill=1,stroke=0)
+    # A: conserva la opción clara inicial, ahora mejor proporcionada.
+    c.setFillColor(CREAM);c.rect(56,555,216,72,fill=1,stroke=0)
+    c.setStrokeColor(colors.HexColor("#c8c0b7"));c.rect(56,555,216,72,fill=0,stroke=1)
+    c.drawImage(str(ROOT / "logo-negro-transparente.png"),86,576,width=154,height=43,preserveAspectRatio=True,mask='auto')
+    c.setFillColor(INK);c.setFont("ArialBold",7);c.drawRightString(265,561,"M")
+    c.setFont("ArialBold",10);c.drawString(56,533,"A / CRUDO EDITORIAL")
+    draw_wrapped(c,"Satinado mate crudo, impresión negra. 70 × 25 mm. La talla va en pestaña lateral para conservar el logo limpio.",56,512,216,8.2,12)
+    c.setFillColor(MUTED);c.setFont("Arial",7);c.drawString(56,434,"CUELLO POSTERIOR / COSTURA SUPERIOR")
+    # B: nueva opción oscura, con acento vino y marca blanca aprobada.
+    c.setFillColor(INK);c.rect(323,555,216,72,fill=1,stroke=0)
+    c.setFillColor(RED);c.rect(323,555,216,5,fill=1,stroke=0)
+    c.drawImage(str(ROOT / "logo-blanco.png"),350,577,width=162,height=42,preserveAspectRatio=True,mask='auto')
+    c.setFillColor(CREAM);c.setFont("ArialBold",7);c.drawRightString(532,563,"M")
+    c.setFillColor(INK);c.setFont("ArialBold",10);c.drawString(323,533,"B / NOCHE VARKUZO")
+    draw_wrapped(c,"Satinado negro de alta densidad, marca blanca y filete vino. 70 × 25 mm. Pestaña de talla negra separada.",323,512,216,8.2,12)
+    c.setFillColor(MUTED);c.setFont("Arial",7);c.drawString(323,434,"PRUEBA DE ROCE, SOLIDEZ Y LAVADO")
+    # Hangtag: la misma arquitectura de marca, con campos comerciales editables.
+    c.setFillColor(colors.HexColor("#ece5dc"));c.roundRect(38,115,519,279,7,fill=1,stroke=0)
+    c.setFillColor(INK);c.roundRect(64,142,190,224,5,fill=1,stroke=0)
+    c.setFillColor(CREAM);c.circle(159,352,5,fill=1,stroke=0)
+    c.drawImage(str(ROOT / "logo-blanco.png"),82,290,width=154,height=54,preserveAspectRatio=True,mask='auto')
+    c.setFillColor(CREAM);c.setFont("Arial",6.4);c.drawCentredString(159,276,"DE MEDELLÍN PA’ CUALQUIER LADO")
+    c.setStrokeColor(colors.HexColor("#a59d94"));c.line(82,259,236,259)
+    c.setFillColor(CREAM);c.setFont("Arial",7)
+    for y, line in ((240,"REF: ___________"),(225,"TALLA: ________"),(210,"COLOR: ________"),(195,"PRECIO COP: _____")):
+        c.drawString(82,y,line)
+    c.setFont("ArialBold",12);c.setFillColor(INK);c.drawString(279,343,"ETIQUETA COLGANTE")
+    c.setFont("Arial",9);c.setFillColor(RED);c.drawString(279,325,"60 × 100 MM / CARTULINA MATE")
+    draw_wrapped(c,"Cartulina 350–400 g/m², cordón negro y perforación de 4 mm. Frente con el logo aprobado; reverso para SKU, talla, color, precio y código real de inventario.",279,297,245,9,14)
+    draw_wrapped(c,"La etiqueta técnica de composición, origen y cuidado se desarrolla por separado con información verificada de cada prenda.",279,209,245,8.5,13,color=MUTED)
     c.showPage()
 
 def draw_supplier_page(c):
@@ -207,9 +299,13 @@ def main():
     alpha=ImageOps.invert(source)
     white=Image.new("RGBA",source.size,(255,255,255,0));white.putalpha(alpha)
     white.save(ROOT/"logo-blanco.png")
+    black=Image.new("RGBA",source.size,(23,21,22,0));black.putalpha(alpha)
+    black.save(ROOT/"logo-negro-transparente.png")
+    make_branded_looks(logo, mono)
     records=[]
     for i,(name,top,bottom,palette,art,detail) in enumerate(LOOKS,1):
-        records.append({"id":f"VKZ-{i:02d}","nombre":name,"superior":top,"inferior":bottom,"paleta":palette,"grafica":art,"construccion":detail,"material_superior_objetivo":material_top(top),"material_inferior_objetivo":material_bottom(bottom),"especificacion_superior":spec_top(top),"especificacion_inferior":spec_bottom(bottom),"talla_base":"M; escalar S–XL después de fit sample","medidas_por_definir":"pecho, largo, hombro, manga, cintura, cadera, tiro, muslo, boca y entrepierna","validaciones":"gramaje real; composición; encogimiento; solidez de color; lavado; resistencia de costura","imagen":f"looks/VKZ-{i:02d}.jpg","estado":"concepto / pendiente de muestra"})
+        application = BRAND_APPLICATIONS.get(i)
+        records.append({"id":f"VKZ-{i:02d}","nombre":name,"superior":top,"inferior":bottom,"paleta":palette,"grafica":art,"construccion":detail,"aplicacion_marca":f"{application[0]}; {application[1]}; tinta {application[3]}" if application else "sin marca exterior protagonista","material_superior_objetivo":material_top(top),"material_inferior_objetivo":material_bottom(bottom),"especificacion_superior":spec_top(top),"especificacion_inferior":spec_bottom(bottom),"talla_base":"M; escalar S–XL después de fit sample","medidas_por_definir":"pecho, largo, hombro, manga, cintura, cadera, tiro, muslo, boca y entrepierna","validaciones":"gramaje real; composición; encogimiento; solidez de color; lavado; resistencia de costura","imagen":str(branded_look_path(i).relative_to(ROOT)).replace('\\','/'),"estado":"concepto / pendiente de muestra"})
     (ROOT/"fichas.json").write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding="utf-8")
     with (ROOT/"fichas.csv").open("w",encoding="utf-8-sig",newline="") as f:
         w=csv.DictWriter(f,fieldnames=records[0].keys());w.writeheader();w.writerows(records)
