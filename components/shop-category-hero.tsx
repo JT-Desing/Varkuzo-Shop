@@ -7,7 +7,7 @@ type Slide = { image: string; alt: string; eyebrow: string; title: string; copy:
 
 const campaigns: Record<string, Slide[]> = {
   Buzos: [
-    { image: '/images/shop-buzos-01.webp', alt: 'Modelo con buzo negro gráfico bajo una estructura de concreto en Medellín', eyebrow: 'BUZOS / 01', title: '¡DEL BARRIO PERO CON ROPA CHIMBA!', copy: 'Buzos amplios para llevar el barrio con orgullo y a tu manera.', location: 'CONCRETO / MEDELLÍN' },
+    { image: '/images/shop-buzos-01.webp', alt: 'Modelo con buzo negro gráfico bajo una estructura de concreto en Medellín', eyebrow: 'BUZOS / 01', title: 'EL BARRIO SE LLEVA PUESTO.', copy: 'Buzos amplios, gráficos con carácter y una pinta hecha a tu manera.', location: 'CONCRETO / MEDELLÍN' },
     { image: '/images/shop-buzos-02.webp', alt: 'Modelo con buzo gris lavado en una calle de Medellín de noche', eyebrow: 'BUZOS / 02', title: 'LA ROPA MÁS ESCASA.', copy: 'Buzos con carácter, hechos para una pinta que no se repite.', location: 'LA NOCHE / MEDELLÍN' },
   ],
   Camisetas: [
@@ -23,7 +23,11 @@ const campaigns: Record<string, Slide[]> = {
   ],
 };
 
-const allSlides = [campaigns.Buzos[0], campaigns.Camisetas[0], campaigns.Pantalones[0]];
+const allSlides: Slide[] = [
+  { image: '/images/shop-todo-01.webp', alt: 'Modelo con camiseta gráfica y jeans amplios en un pasaje de Medellín con vista a las montañas', eyebrow: 'TODO / 01', title: '¡DEL BARRIO PERO CON ROPA CHIMBA!', copy: 'Buzos amplios para llevar el barrio con orgullo y a tu manera.', location: 'LA LOMA / MEDELLÍN' },
+  campaigns.Camisetas[0],
+  campaigns.Pantalones[0],
+];
 
 export function ShopCategoryHero({ category }: { category: string }) {
   const slides = campaigns[category] ?? allSlides;
@@ -49,7 +53,7 @@ export function ShopCategoryHero({ category }: { category: string }) {
     {slides.map((slide, index) => <div className={`shop-campaign-slide${index === active ? ' is-active' : ''}`} key={`${category}-${slide.image}`} aria-hidden={index !== active} style={{ '--campaign-image': `url("${slide.image}")` } as CSSProperties}>
       <img src={slide.image} alt={index === active ? slide.alt : ''} className="shop-campaign-image" fetchPriority={index === 0 ? 'high' : undefined} />
       <div className="shop-campaign-shade" />
-      <div className={`shop-campaign-content${slide.title.length > 24 ? ' shop-campaign-content--long' : ''}`}>
+      <div className="shop-campaign-content">
         <span className="shop-campaign-kicker">VARKUZO / {slide.eyebrow}</span>
         {index === active ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}
         <p>{slide.copy}</p>
