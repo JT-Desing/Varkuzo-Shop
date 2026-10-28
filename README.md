@@ -1,5 +1,7 @@
 # Varkuzo Shop
 
+La [tirilla de preparación del futuro POS](docs/pos-recibo-aprobado.md) tiene diseño aprobado y prueba ESC/POS local. Debe usarse como base al conectar los pedidos WooCommerce; aún no es una factura electrónica ni hay una integración POS operativa.
+
 Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo administrado desde WordPress + WooCommerce. El diseño actual es una dirección visual en revisión; las imágenes y productos marcados como **CONCEPTO** no representan inventario disponible.
 
 ## Arranque local

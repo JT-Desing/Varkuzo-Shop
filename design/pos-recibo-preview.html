@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Varkuzo · Tirilla de preparación</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#e7e2da;color:#171717;font-family:Arial,sans-serif}
+    .stage{min-height:100vh;display:grid;place-items:center;padding:36px 16px}.frame{display:flex;align-items:flex-start;gap:42px;max-width:960px}
+    .notes{max-width:420px}.notes small{color:#8d2028;letter-spacing:.2em;font-weight:800}.notes h1{font-size:clamp(32px,5vw,58px);line-height:.94;margin:16px 0}.notes p{line-height:1.55;color:#514a43}.notes ul{padding-left:20px;line-height:1.7}
+    .receipt{width:302px;flex:none;background:#fff;padding:15px 15px 22px;box-shadow:0 16px 44px #0002;font-family:'Courier New',monospace;font-size:11px;line-height:1.28}
+    .receipt .brand{display:block;width:154px;margin:2px auto 8px}.origin,.center{text-align:center}.origin{font-size:9px;letter-spacing:.16em}.divider{border-top:1px dashed #222;margin:11px 0}.heavy{border-top:3px solid #111;margin:11px 0}.label{font-size:10px;font-weight:700;letter-spacing:.08em}.order-number{font-family:Arial,sans-serif;font-size:43px;font-weight:900;line-height:1;margin:4px 0 2px;letter-spacing:-.07em}.status{display:inline-block;border:2px solid #111;padding:5px 9px;font-weight:900;margin:8px 0 3px;font-size:11px}.row{display:flex;justify-content:space-between;gap:12px}.row>*:last-child{text-align:right}.muted{color:#444}.item{margin:9px 0}.item strong{display:block;font-size:12px}.item .qty{font-weight:900}.total{font-size:15px;font-weight:900}.foot{font-size:9px;letter-spacing:.05em}.cut{height:8px;margin-top:12px;border-bottom:2px dotted #ddd}
+    @media(max-width:720px){.frame{flex-direction:column}.notes{max-width:302px}}@media print{body{background:#fff}.stage{display:block;padding:0}.notes{display:none}.receipt{box-shadow:none;width:80mm;padding:4mm 3mm}.cut{display:none}@page{size:80mm auto;margin:0}}
+  </style>
+</head>
+<body><main class="stage"><div class="frame"><section class="notes"><small>VARKUZO / POS</small><h1>La orden<br>sale clara.</h1><p>Propuesta de tirilla interna para la impresora térmica de 80 mm. La marca abre la pieza; el número del pedido y el estado de pago mandan. La información privada queda reducida a lo necesario para preparar y entregar.</p><ul><li>Ejemplo con datos ficticios.</li><li>Negro de alto contraste para impresión térmica.</li><li>Sin fondos oscuros: ahorra papel y evita manchas.</li><li>La factura electrónica tendrá su propio formato y estado.</li></ul></section>
+  <article class="receipt" aria-label="Vista previa de tirilla de preparación">
+    <img class="brand" src="../public/images/varkuzo-wordmark.svg" alt="Varkuzo">
+    <div class="origin">DE MEDELLIN PA' CUALQUIER LADO</div><div class="heavy"></div>
+    <div class="center"><div class="label">ORDEN DE PREPARACION</div><div class="order-number">#1048</div><div class="status">PAGO CONFIRMADO</div></div>
+    <div class="divider"></div><div class="row"><span>28 OCT 2026</span><span>10:42 A. M.</span></div><div class="row"><span>ENTREGA</span><span>MEDELLIN / DOMICILIO</span></div><div class="divider"></div>
+    <div class="label">PRENDAS / 3 UNIDADES</div>
+    <div class="item"><strong><span class="qty">1×</span> BUZO TRAZO</strong><span class="muted">Negro lavado / talla M</span></div>
+    <div class="item"><strong><span class="qty">2×</span> CAMISETA VKZ</strong><span class="muted">Crudo / talla L</span></div>
+    <div class="divider"></div><div class="label">NOTA PARA PREPARACION</div><div>Empacar por separado. Entregar en porteria.</div>
+    <div class="heavy"></div><div class="row total"><span>TOTAL</span><span>$ 280.000</span></div><div class="divider"></div>
+    <div class="center foot">PEDIDO DE PRUEBA · NO ES FACTURA<br>ELECTRONICA NI DOCUMENTO FISCAL</div><div class="cut"></div>
+  </article></div></main></body></html>
