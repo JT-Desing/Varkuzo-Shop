@@ -84,9 +84,9 @@
 
 .main-nav .nav-discounts{color:#cf7374}
 .main-nav .nav-discounts:after{right:0;background:#a12629}
-.home-sale-promo{min-height:440px;display:grid;grid-template-columns:1fr 42%;align-items:center;position:relative;overflow:hidden;background:#71191d;color:#f4eee5;padding:55px clamp(24px,7vw,105px)}
-.home-sale-promo>div{position:relative;z-index:2}.home-sale-promo .eyebrow{font-size:10px;color:#e4b2ac}.home-sale-promo h2{font-family:var(--font-display);font-size:clamp(75px,8vw,130px);line-height:.82;letter-spacing:-.035em;margin:20px 0}.home-sale-promo h2 em{font-style:normal;color:#e9b8ae}.home-sale-promo p:not(.eyebrow){font-size:13px;line-height:1.6;margin:0 0 28px}.home-sale-promo>img{position:absolute;right:4%;bottom:0;height:112%;width:auto;filter:drop-shadow(8px 7px 15px #18060777)}
-@media(max-width:650px){.home-sale-promo{min-height:390px;padding:42px 20px}.home-sale-promo h2{font-size:clamp(56px,13vw,78px)}.home-sale-promo>img{height:80%;right:-12%;opacity:.58}.home-sale-promo>div{max-width:90%}}
+.home-sale-promo{min-height:clamp(500px,36vw,620px);display:grid;grid-template-columns:1fr 42%;align-items:center;position:relative;overflow:hidden;background:#71191d;color:#f4eee5;padding:55px clamp(24px,7vw,105px)}
+.home-sale-promo>div{position:relative;z-index:2}.home-sale-promo .eyebrow{font-size:10px;color:#e4b2ac}.home-sale-promo h2{font-family:var(--font-display);font-size:clamp(75px,8vw,130px);line-height:.82;letter-spacing:-.035em;margin:20px 0}.home-sale-promo h2 em{font-style:normal;color:#e9b8ae}.home-sale-promo p:not(.eyebrow){font-size:13px;line-height:1.6;margin:0 0 28px}.home-sale-promo>img{position:absolute;right:6%;bottom:0;height:98%;width:auto;max-width:40%;object-fit:contain;object-position:bottom center;filter:drop-shadow(8px 7px 15px #18060777)}
+@media(max-width:650px){.home-sale-promo{min-height:390px;padding:42px 20px}.home-sale-promo h2{font-size:clamp(56px,13vw,78px)}.home-sale-promo>img{height:80%;right:-6%;max-width:55%;opacity:.58}.home-sale-promo>div{max-width:90%}}
 
 @media(prefers-reduced-motion:no-preference){html.motion-enabled .reveal:not(.is-visible){opacity:0;transform:translateY(32px)}}
 
