@@ -11,6 +11,7 @@ from pathlib import Path
 from PIL import Image, ImageOps
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
@@ -23,7 +24,7 @@ RED = colors.HexColor("#881b23")
 MUTED = colors.HexColor("#5f5a57")
 PAPER = colors.HexColor("#f8f7f4")
 CREAM = colors.HexColor("#eee9df")
-BRAND_FONT = "VarkuzoBrocha"
+BRAND_FONT = "VarkuzoGestualR03"
 
 # Aplicaciones puntuales de marca. Las posiciones se ajustan a cada foto conceptual;
 # el arte final y su escala se fijan después de aprobar la muestra física.
@@ -74,7 +75,7 @@ def font_setup():
     font_dir = Path("C:/Windows/Fonts")
     pdfmetrics.registerFont(TTFont("Arial", str(font_dir / "arial.ttf")))
     pdfmetrics.registerFont(TTFont("ArialBold", str(font_dir / "arialbd.ttf")))
-    pdfmetrics.registerFont(TTFont(BRAND_FONT, str(PROJECT / "public" / "fonts" / "VarkuzoBrocha-Regular.ttf")))
+    pdfmetrics.registerFont(TTFont(BRAND_FONT, str(PROJECT / "public" / "fonts" / "VarkuzoGestualR03-Regular.ttf")))
 
 def ink_cutout(path, light=False, tone=None):
     """Transforma una marca negra sobre blanco en tinta transparente para un montaje."""
@@ -174,13 +175,25 @@ def draw_look(c, n, look):
     c.setStrokeColor(RED); c.setLineWidth(2); c.line(38, PAGE_H - 101, PAGE_W - 38, PAGE_H - 101)
     c.setFont("Arial", 7.5); c.setFillColor(MUTED); c.drawString(38, PAGE_H - 118, "DIRECCIÓN DE PRODUCTO / PROTOTIPO POR VALIDAR")
     img_path = branded_look_path(n)
-    img = Image.open(img_path)
+    img = Image.open(img_path).convert("RGB")
+    # Las láminas traen márgenes blancos distintos. Recortamos solo los laterales
+    # para mantener cabeza y calzado completos y dar tamaño uniforme al modelo.
+    foreground = ImageOps.grayscale(img).point(lambda p: 255 if p < 225 else 0)
+    bounds = foreground.getbbox()
+    if bounds:
+        left = max(0, bounds[0] - 18)
+        right = min(img.width, bounds[2] + 18)
+        img = img.crop((left, 0, right, img.height))
     iw, ih = img.size
-    target_h = 554; target_w = target_h * iw / ih
-    c.drawImage(str(img_path), 35, PAGE_H - 690, width=target_w, height=target_h)
+    box_x, box_y, box_w, box_h = 35, PAGE_H - 690, 260, 554
+    scale = min(box_w / iw, box_h / ih)
+    draw_w, draw_h = iw * scale, ih * scale
+    c.drawImage(ImageReader(img), box_x + (box_w - draw_w) / 2,
+                box_y + (box_h - draw_h) / 2, width=draw_w, height=draw_h)
     c.setFont("Arial", 7); c.setFillColor(MUTED)
-    c.drawCentredString(35 + target_w/2, PAGE_H - 703, "VISTA CONCEPTUAL · FRENTE DE LOOK")
+    c.drawCentredString(box_x + box_w / 2, PAGE_H - 703, "VISTA CONCEPTUAL · FRENTE DE LOOK")
     x = 335; y = PAGE_H - 145; width = PAGE_W - x - 37
+    assert box_x + box_w <= x - 35, "La foto debe mantener espacio frente a la ficha técnica"
     y = section(c, "Superior", top, x, y, width)
     y = section(c, "Inferior", bottom, x, y, width)
     y = section(c, "Paleta", palette, x, y, width)

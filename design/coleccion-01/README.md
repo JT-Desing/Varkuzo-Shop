@@ -11,7 +11,7 @@ Este paquete reúne **30 propuestas de conjuntos** para presentar a talleres y p
 - `laminas/`: cinco láminas originales de exploración visual.
 - `generar_catalogo.py`: genera de nuevo el PDF y las fichas.
 
-La portada presenta tres looks completos y centrados. El nombre de cada look utiliza la fuente Varkuzo Brocha; la información técnica conserva una tipografía de lectura. La página de marquillas compara la opción clara con **Noche Varkuzo**, una alternativa negra con logo blanco y acento vino. El PDF incluye la etiqueta colgante de referencia.
+La portada presenta tres looks completos y centrados. El nombre de cada look utiliza la fuente **Varkuzo Gestual R03** entregada para la web; la información técnica conserva una tipografía de lectura. Las fotos se ajustan dentro de una columna fija con margen frente a los textos. La página de marquillas compara la opción clara con **Noche Varkuzo**, una alternativa negra con logo blanco y acento vino. El PDF incluye la etiqueta colgante de referencia.
 
 ## Cómo pedir una cotización útil
 
