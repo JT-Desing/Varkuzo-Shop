@@ -51,11 +51,7 @@ export function MotionInit() {
     window.addEventListener('scroll', revealInView, { passive: true });
     window.addEventListener('resize', revealInView);
     const firstCheck = window.setTimeout(revealInView, 100);
-    const mobileFallback = window.setTimeout(() => {
-      if (window.matchMedia('(max-width: 700px)').matches) {
-        document.querySelectorAll('.reveal:not(.is-visible)').forEach((element) => element.classList.add('is-visible'));
-      }
-    }, 3500);
+    const mobileFallback = window.setTimeout(revealInView, 3500);
     return () => {
       mutations.disconnect();
       observer.disconnect();

@@ -63,9 +63,11 @@
 /* Mobile campaign layout: keep the artwork, CTA and slide controls in separate bands. */
 @media(max-width:540px){
   .site-header{height:64px;padding-inline:20px}
-  .brand-logo{width:116px;height:56px}
-  .header-actions{gap:19px}
-  .menu-button{font-size:10px;letter-spacing:.14em}
+  .brand-logo{width:110px;height:56px}
+  .header-actions{gap:12px;margin-left:auto;padding-right:42px}
+  .header-actions .search-link,.header-actions .header-favorites,.header-actions .header-account{width:22px;height:36px;min-width:22px;justify-content:center}
+  .menu-button{position:absolute;right:12px;top:12px;width:38px;height:40px;display:flex;align-items:center;justify-content:center;padding:0;font-size:0}
+  .menu-button span{font-size:27px;margin:0;line-height:1}
   .main-nav{top:64px}
   .hero-carousel .hero-meta{display:none}
   .hero-carousel .hero-content{left:24px;top:35svh;transform:none;width:calc(100% - 48px)}

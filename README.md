@@ -10,6 +10,8 @@ Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo adm
 4. Si WordPress está vacío, completa su instalación inicial, instala WooCommerce y configura moneda COP y zona de venta antes de cargar productos.
 5. Activa los plugins con `docker compose --profile admin run --rm -T wpcli plugin activate varkuzo-favorites varkuzo-newsletter`. Para la cuenta de clientes, habilita el registro en WooCommerce y deja el rol predeterminado como `customer`.
 
+El proyecto usa un solo entorno Docker Compose. Sus servicios son la tienda (`frontend`), WordPress, MariaDB y un único túnel (`tunnel`), que apunta a `frontend:3000` dentro de la misma red. Consulta la dirección actual con `docker compose logs tunnel`; las URL gratuitas `trycloudflare.com` son temporales y pueden cambiar cuando se reinicia el túnel. No crees otro contenedor `cloudflared` para esta tienda.
+
 El frontend lee los productos publicados desde la WooCommerce Store API. Cuando aún no hay productos, muestra un catálogo de demostración local. No hay checkout ni cobros reales en esta versión.
 
 El newsletter de prototipo guarda en WordPress el correo, consentimiento y beneficio reservado del 10 %. Aún no envía campañas ni genera cupones canjeables. Antes del lanzamiento faltan el correo de contacto de privacidad, las condiciones del descuento, el canal de baja, el servicio de envío y conectar el disparador preparado `varkuzo:cart-view` a una pantalla de carrito real.
@@ -26,7 +28,7 @@ El sitio también incluye `/nosotros` (dirección de marca, misión y visión) y
 - `components/`: navegación, carrusel, tarjetas, filtros, galería y animaciones.
 - `lib/products.ts`: adaptación de productos WooCommerce y catálogo de demostración.
 - `public/images/`: recursos visuales de la propuesta, separados de los componentes interactivos.
-- `compose.yaml`: frontend, WordPress y MariaDB para desarrollo local.
+- `compose.yaml`: frontend, WordPress, MariaDB y el túnel de vista previa en un mismo entorno.
 
 ## Diseño actual
 

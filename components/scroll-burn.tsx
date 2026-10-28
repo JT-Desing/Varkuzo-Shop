@@ -29,7 +29,7 @@ function valueNoise(x: number, y: number, seed: number) {
   return (a * (1 - sy) + b * sy) * 2 - 1;
 }
 
-export function ScrollBurn({ color = '#f1eee8', start = .08, end = .72, blobSize = 72, noise = 1, detail = .55, seed = 47 }: ScrollBurnProps) {
+export function ScrollBurn({ color = '#f1eee8', start = .02, end = .34, blobSize = 72, noise = 1, detail = .55, seed = 47 }: ScrollBurnProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -96,8 +96,10 @@ export function ScrollBurn({ color = '#f1eee8', start = .08, end = .72, blobSize
       if (progress <= 0) { context.clearRect(0, 0, width, height); return; }
       const pixels = context.createImageData(width, height);
       const data = pixels.data;
-      // Keep the burn close to the seam instead of covering most of the hero.
-      const edge = height - Math.min(height * .2, 150 * scale) * progress;
+      // Reveal the paper along the section seam as soon as scrolling begins.
+      // Finish early enough to be noticeable, while keeping the collection near the banner.
+      const easedProgress = progress * progress * (3 - 2 * progress);
+      const edge = height - Math.min(height * .21, 140 * scale) * easedProgress;
       const amplitude = Math.max(18, Math.min(58, height * .075));
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
