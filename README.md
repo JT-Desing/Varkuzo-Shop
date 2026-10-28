@@ -4,13 +4,15 @@ Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo adm
 
 ## Arranque local
 
-1. Copia `.env.example` como `.env`, asigna tres contraseñas locales diferentes y genera una clave aleatoria larga para `VARKUZO_FAVORITES_KEY`.
+1. Copia `.env.example` como `.env`, asigna tres contraseñas locales diferentes y genera claves aleatorias largas y distintas para `VARKUZO_FAVORITES_KEY` y `VARKUZO_NEWSLETTER_KEY`.
 2. Ejecuta `docker compose up --build -d`.
 3. Abre la tienda en `http://localhost:3000` y WordPress en `http://localhost:8080/wp-admin`.
 4. Si WordPress está vacío, completa su instalación inicial, instala WooCommerce y configura moneda COP y zona de venta antes de cargar productos.
-5. Activa el plugin de conteo con `docker compose --profile admin run --rm -T wpcli plugin activate varkuzo-favorites`. Para la cuenta de clientes, habilita el registro en WooCommerce y deja el rol predeterminado como `customer`.
+5. Activa los plugins con `docker compose --profile admin run --rm -T wpcli plugin activate varkuzo-favorites varkuzo-newsletter`. Para la cuenta de clientes, habilita el registro en WooCommerce y deja el rol predeterminado como `customer`.
 
 El frontend lee los productos publicados desde la WooCommerce Store API. Cuando aún no hay productos, muestra un catálogo de demostración local. No hay checkout ni cobros reales en esta versión.
+
+El newsletter de prototipo guarda en WordPress el correo, consentimiento y beneficio reservado del 10 %. Aún no envía campañas ni genera cupones canjeables. Antes del lanzamiento faltan el correo de contacto de privacidad, las condiciones del descuento, el canal de baja, el servicio de envío y conectar el disparador preparado `varkuzo:cart-view` a una pantalla de carrito real.
 
 La página `/descuentos` solo muestra productos publicados que WooCommerce marque como rebajados, tengan existencias y cuyo precio actual sea menor que el regular. Se consulta la Store API cada minuto; el porcentaje se calcula con esos precios. Si todavía no hay promociones reales, aparece un estado vacío. Los filtros de categoría, talla y precios actúan sobre esa lista. Para cambiar la foto central del banner desde WordPress, crea una página con slug `descuentos` y asígnale una imagen destacada recortada con transparencia; el frontend la sirve mediante una ruta interna, con la imagen incluida en el proyecto como respaldo.
 

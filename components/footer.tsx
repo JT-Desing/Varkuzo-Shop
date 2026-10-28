@@ -7,7 +7,7 @@ export function Footer() {
     <div className="footer-v2-links">
       <div><h3>EXPLORA</h3><Link href="/shop">Todo el catálogo</Link><Link href="/descuentos">Descuentos</Link><Link href="/shop?categoria=Buzos">Buzos</Link><Link href="/shop?categoria=Camisetas">Camisetas</Link><Link href="/shop?categoria=Pantalones">Pantalones</Link><Link href="/favoritos">Mis favoritos</Link></div>
       <div><h3>TE AYUDAMOS</h3><Link href="/ayuda">Preguntas frecuentes</Link><Link href="/ayuda#envios">Entregas en Medellín</Link><Link href="/ayuda#retracto">Retracto y devoluciones</Link><Link href="/ayuda#garantia">Garantía legal</Link><Link href="/ayuda#pagos">Pagos y seguridad</Link></div>
-      <div><h3>LA MARCA</h3><Link href="/nosotros">Nosotros</Link><Link href="/nosotros#mision">Misión</Link><Link href="/nosotros#vision">Visión</Link><Link href="/nosotros#origen">De Medellín</Link></div>
+      <div><h3>LA MARCA</h3><Link href="/nosotros">Nosotros</Link><Link href="/nosotros#mision">Misión</Link><Link href="/nosotros#vision">Visión</Link><Link href="/nosotros#origen">De Medellín</Link><Link href="/privacidad">Tus datos</Link></div>
       <div className="footer-service"><h3>ANTES DE COMPRAR</h3><p>Estamos preparando las primeras piezas. Antes de abrir ventas publicaremos precios, medidas, entregas y un canal de atención confirmado.</p><Link href="/ayuda">REVISA LAS PREGUNTAS FRECUENTES ↗</Link></div>
     </div>
     <div className="footer-v2-bottom"><span>© {new Date().getFullYear()} VARKUZO · HECHO DESDE MEDELLÍN</span><span>El origen se lleva puesto.</span><a href="https://www.sic.gov.co/" target="_blank" rel="noopener noreferrer">AUTORIDAD DE PROTECCIÓN AL CONSUMIDOR ↗</a></div>

@@ -4,6 +4,7 @@ import './brand-display.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { MotionInit } from '@/components/motion-init';
+import { NewsletterPopup } from '@/components/newsletter-popup';
 
 export const metadata: Metadata = {
   title: 'Varkuzo | Ropa urbana creada desde Medellín',
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="es"><body><MotionInit /><Header />{children}<Footer /></body></html>;
+  return <html lang="es"><body><MotionInit /><Header />{children}<Footer /><NewsletterPopup /></body></html>;
 }
