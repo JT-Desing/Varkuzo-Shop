@@ -8,10 +8,10 @@ type Slide = { image: string; alt: string; eyebrow: string; title: string; copy:
 const campaigns: Record<string, Slide[]> = {
   Buzos: [
     { image: '/images/shop-buzos-01.webp', alt: 'Modelo con buzo negro gráfico bajo una estructura de concreto en Medellín', eyebrow: 'BUZOS / 01', title: '¡DEL BARRIO PERO CON ROPA CHIMBA!', copy: 'Buzos amplios para llevar el barrio con orgullo y a tu manera.', location: 'CONCRETO / MEDELLÍN' },
-    { image: '/images/shop-buzos-02.webp', alt: 'Modelo con buzo gris lavado en una calle de Medellín de noche', eyebrow: 'BUZOS / 02', title: 'DE LA CUADRA A LA NOCHE.', copy: 'La misma actitud cuando cae el sol y la ciudad sigue despierta.', location: 'LA NOCHE / MEDELLÍN' },
+    { image: '/images/shop-buzos-02.webp', alt: 'Modelo con buzo gris lavado en una calle de Medellín de noche', eyebrow: 'BUZOS / 02', title: 'LA ROPA MÁS ESCASA.', copy: 'Buzos con carácter, hechos para una pinta que no se repite.', location: 'LA NOCHE / MEDELLÍN' },
   ],
   Camisetas: [
-    { image: '/images/shop-camisetas-01.webp', alt: 'Modelo con camiseta amplia marfil sentado en una escalera urbana', eyebrow: 'CAMISETAS / 01', title: 'LA CUADRA TIENE ESTILO.', copy: 'Camisetas amplias para salir como sos, sin tanta vuelta.', location: 'LA LOMA / MEDELLÍN' },
+    { image: '/images/shop-camisetas-01.webp', alt: 'Modelo con camiseta amplia marfil sentado en una escalera urbana', eyebrow: 'CAMISETAS / 01', title: 'LO MÁS FRESA DEL PEDAZO.', copy: 'Pa’ mi gente del barrio: camisetas amplias para salir con toda.', location: 'LA LOMA / MEDELLÍN' },
     { image: '/images/shop-camisetas-02.webp', alt: 'Modelo con camiseta amplia negra frente a un taller de Medellín', eyebrow: 'CAMISETAS / 02', title: 'PONETE LO QUE TE NAZCA.', copy: 'Gráficas con carácter para hacer tuya cada pinta.', location: 'EL TALLER / MEDELLÍN' },
   ],
   Pantalones: [
