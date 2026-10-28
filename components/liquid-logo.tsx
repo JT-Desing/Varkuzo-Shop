@@ -46,7 +46,7 @@ function compileShader(gl: WebGLRenderingContext, type: number, source: string) 
   return shader;
 }
 
-export function LiquidLogo({ onClick }: { onClick?: () => void }) {
+export function LiquidLogo({ onClick, href = '/', className = '', label = 'Varkuzo, inicio' }: { onClick?: () => void; href?: string; className?: string; label?: string }) {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -152,7 +152,7 @@ export function LiquidLogo({ onClick }: { onClick?: () => void }) {
     };
   }, []);
 
-  return <Link ref={anchorRef} href="/" aria-label="Varkuzo, inicio" className="brand-logo" onClick={onClick}>
+  return <Link ref={anchorRef} href={href} aria-label={label} className={`brand-logo ${className}`.trim()} onClick={onClick}>
     <img src="/images/varkuzo-wordmark.svg" alt="" aria-hidden="true" />
     <canvas ref={canvasRef} className="brand-logo-liquid" aria-hidden="true" />
   </Link>;

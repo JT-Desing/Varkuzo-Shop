@@ -45,6 +45,9 @@
 .brand-logo-liquid{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;pointer-events:none}
 .brand-logo--liquid-ready .brand-logo-liquid{opacity:1}
 .brand-logo--liquid-ready>img{opacity:0}
+.closing-banner .closing-logo{width:min(72vw,1050px);height:auto;aspect-ratio:1563/680;margin:12px auto 22px;display:block;flex:none}
+.closing-banner .closing-logo img{display:block;width:100%;height:100%;max-height:none;object-fit:contain}
+@media(max-width:540px){.closing-banner .closing-logo{width:min(90vw,480px);margin:14px auto 20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
 
 /* The ticker has its own row, so it cannot cover the slide controls. */
