@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getProducts } from '@/lib/products';
 import { ShopClient } from '@/components/shop-client';
+import { LiquidLogo } from '@/components/liquid-logo';
 import './shop-hero.css';
 
 const categories = ['Buzos', 'Camisetas', 'Pantalones', 'Accesorios'];
@@ -19,5 +20,5 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ categoria?: string }> }) {
   const products = await getProducts();
   const params = await searchParams;
-  return <main className="shop-page"><ShopClient products={products} initialCategory={params.categoria || 'Todo'} /><div className="shop-end-banner reveal"><span>DE ESTA CUADRA PA’ DONDE SEA</span><strong>VARKUZO</strong><span>MEDELLÍN / COLOMBIA</span></div></main>;
+  return <main className="shop-page"><ShopClient products={products} initialCategory={params.categoria || 'Todo'} /><div className="shop-end-banner reveal"><span>DE ESTA CUADRA PA’ DONDE SEA</span><LiquidLogo className="shop-end-logo" label="Varkuzo, volver al inicio" /><span>MEDELLÍN / COLOMBIA</span></div></main>;
 }
