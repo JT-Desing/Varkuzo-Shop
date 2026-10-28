@@ -12,6 +12,8 @@ Prototipo funcional de la tienda Varkuzo: frontend Next.js/React y catálogo adm
 
 El proyecto usa un solo entorno Docker Compose. Sus servicios son la tienda (`frontend`), WordPress, MariaDB y un único túnel (`tunnel`), que apunta a `frontend:3000` dentro de la misma red. Consulta la dirección actual con `docker compose logs tunnel`; las URL gratuitas `trycloudflare.com` son temporales y pueden cambiar cuando se reinicia el túnel. No crees otro contenedor `cloudflared` para esta tienda.
 
+El frontend se sirve como compilación de producción para que las animaciones también se ejecuten a través del túnel. Después de cambiar código o recursos del frontend, actualiza la compilación con `docker compose up -d --no-deps --force-recreate frontend` y comprueba tanto `http://localhost:3000` como la URL actual del túnel. El contenedor `tunnel` permanece apuntando al mismo servicio.
+
 El frontend lee los productos publicados desde la WooCommerce Store API. Cuando aún no hay productos, muestra un catálogo de demostración local. No hay checkout ni cobros reales en esta versión.
 
 El newsletter de prototipo guarda en WordPress el correo, consentimiento y beneficio reservado del 10 %. Aún no envía campañas ni genera cupones canjeables. Antes del lanzamiento faltan el correo de contacto de privacidad, las condiciones del descuento, el canal de baja, el servicio de envío y conectar el disparador preparado `varkuzo:cart-view` a una pantalla de carrito real.
