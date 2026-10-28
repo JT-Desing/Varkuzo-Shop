@@ -10,6 +10,8 @@ Este paquete reúne **30 propuestas de conjuntos** para presentar a talleres y p
 - `fichas.csv` y `fichas.json`: datos editables por referencia.
 - `laminas/`: cinco láminas originales de exploración visual.
 - `generar_catalogo.py`: genera de nuevo el PDF y las fichas.
+- `Varkuzo_30_looks_editables_proveedores.zip`: paquete para editar y compartir con proveedores. Incluye 60 fichas SVG, fotos de concepto, CSV/JSON, logo vectorial aprobado y bocetos SVG de marquilla y etiqueta. Mantener juntas las carpetas al editar los SVG porque las fotos están enlazadas.
+- `generar_editables.py`: reproduce el paquete editable desde las fichas y las imágenes fuente.
 
 La portada presenta tres looks completos y centrados. El nombre de cada look utiliza la fuente **Varkuzo Gestual R03** entregada para la web; la información técnica conserva una tipografía de lectura. Las fotos se ajustan dentro de una columna fija con margen frente a los textos. La página de marquillas compara la opción clara con **Noche Varkuzo**, una alternativa negra con logo blanco y acento vino. El PDF incluye la etiqueta colgante de referencia.
 

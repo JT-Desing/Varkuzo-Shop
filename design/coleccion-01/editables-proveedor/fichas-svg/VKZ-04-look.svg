@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1400" height="1000" viewBox="0 0 1400 1000">
+<style>text{font-family:Arial,sans-serif}</style>
+<rect width="1400" height="1000" fill="#f4f1eb"/>
+<rect x="36" y="36" width="1328" height="928" fill="#fff"/>
+<rect x="62" y="62" width="535" height="820" fill="#fafafa"/>
+<image x="62" y="62" width="535" height="820" preserveAspectRatio="xMidYMid meet" xlink:href="../imagenes-conceptuales/VKZ-04.jpg"/>
+<text x="630" y="82" fill="#9b1721" font-size="16" font-weight="700" letter-spacing="2" text-anchor="start">VARKUZO / COLECCIÓN CONCEPTUAL 01</text>
+<text x="630" y="148" fill="#111" font-size="52" font-weight="800" letter-spacing="0" text-anchor="start">VKZ-04</text>
+<text x="630" y="194" fill="#111" font-size="31" font-weight="700" letter-spacing="0" text-anchor="start">PUNTO DE FUGA</text>
+<line x1="630" y1="218" x2="1330" y2="218" stroke="#9b1721" stroke-width="4"/>
+<text x="630" y="262" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">SUPERIOR</text>
+<text x="630" y="290" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">camiseta boxy petróleo</text>
+<text x="630" y="341" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">INFERIOR</text>
+<text x="630" y="369" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">jean ancho carbón</text>
+<text x="630" y="420" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">PALETA</text>
+<text x="630" y="448" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">petróleo / carbón / hueso</text>
+<text x="630" y="499" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">GRÁFICA</text>
+<text x="630" y="527" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">marca pequeña en pecho</text>
+<text x="630" y="578" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">CONSTRUCCIÓN</text>
+<text x="630" y="606" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">bordado lineal en ambas piernas</text>
+<text x="630" y="657" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">MARCA</text>
+<text x="630" y="685" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">sin marca exterior protagonista</text>
+<text x="630" y="736" fill="#9b1721" font-size="13" font-weight="700" letter-spacing="2" text-anchor="start">TALLA BASE</text>
+<text x="630" y="764" fill="#171717" font-size="18" font-weight="400" letter-spacing="0" text-anchor="start">M; escalar S–XL después de fit sample</text>
+<text x="62" y="925" fill="#777" font-size="15" font-weight="700" letter-spacing="1" text-anchor="start">IMAGEN CONCEPTUAL · NO ES ARTE DE PRODUCCIÓN</text>
+<text x="630" y="925" fill="#777" font-size="15" font-weight="700" letter-spacing="1" text-anchor="start">EDITA TEXTOS Y UBICACIONES EN SVG</text>
+</svg>

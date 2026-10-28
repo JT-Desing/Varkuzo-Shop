@@ -1,0 +1,10 @@
+VARKUZO / Editables para proveedores
+
+60 fichas SVG: look y ficha técnica para cada una de las 30 propuestas.
+Abrir y editar en Inkscape, Illustrator o software compatible con SVG.
+Las fotos JPG son referencias raster y NO permiten editar patrones ni estampados.
+Los textos, líneas y composiciones de las fichas sí son editables.
+CSV/JSON contienen los datos estructurados editables.
+Marquillas y etiqueta son bocetos; confirmar dimensiones y datos legales.
+Gramajes y composición son objetivos de desarrollo, pendientes de muestra.
+Conservar la estructura de carpetas para que los SVG encuentren sus imágenes.
