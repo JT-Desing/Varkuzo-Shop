@@ -37,7 +37,8 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     const state = motion.current;
     state.targetX = event.clientX - bounds.left;
     state.targetY = event.clientY - bounds.top;
-    if (entering) { state.x = state.targetX; state.y = state.targetY; state.targetRadius = 130; }
+    if (entering) { state.x = state.targetX; state.y = state.targetY; }
+    state.targetRadius = Math.min(bounds.width, bounds.height) * 0.42;
     if (!state.frame) state.frame = requestAnimationFrame(animate);
   }
 
